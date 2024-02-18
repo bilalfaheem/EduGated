@@ -10,5 +10,5 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this.initialParams, this.navigator)
       : super(HomeState.initial(initialParams: initialParams));
 
-onPageChange(int pageIndex)=> emit(state.copyWith(selectedPageIndex: pageIndex));
+onPageUpdate(int pageIndex)=> emit(state.copyWith(selectedPageIndex: pageIndex));
 }

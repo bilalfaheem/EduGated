@@ -1,5 +1,7 @@
 import 'package:edugated/features/activity/activity_initial_params.dart';
 import 'package:edugated/features/activity/activity_page.dart';
+import 'package:edugated/features/guest/guest_initial_params.dart';
+import 'package:edugated/features/guest/guest_page.dart';
 import 'package:edugated/features/home/home_state.dart';
 import 'package:edugated/main.dart';
 import 'package:edugated/resources/app_assets.dart';
@@ -25,7 +27,7 @@ class _HomeState extends State<HomePage> {
 
   final List<Widget> _pages = [
     ActivityPage(cubit: getIt(param1: const ActivityInitialParams())),
-    ActivityPage(cubit: getIt(param1: const ActivityInitialParams())),
+    GuestPage(cubit: getIt(param1: const GuestInitialParams())),
     ActivityPage(cubit: getIt(param1: const ActivityInitialParams()))
   ];
 
@@ -67,7 +69,7 @@ class _HomeState extends State<HomePage> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                cubit.onPageChange(0);
+                                cubit.onPageUpdate(0);
                               },
                               child: AnimatedContainer(
                                 duration: Duration(seconds: 1),
@@ -104,7 +106,7 @@ class _HomeState extends State<HomePage> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                cubit.onPageChange(1);
+                                cubit.onPageUpdate(1);
                               },
                               child: AnimatedContainer(
                                 duration: Duration(seconds: 1),
@@ -141,7 +143,7 @@ class _HomeState extends State<HomePage> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                cubit.onPageChange(2);
+                                cubit.onPageUpdate(2);
                               },
                               child: AnimatedContainer(
                                 duration: Duration(seconds: 1),

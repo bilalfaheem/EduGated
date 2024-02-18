@@ -11,6 +11,9 @@ import 'package:edugated/features/activity/activity_page.dart';
 import 'package:edugated/features/gate_pass/gate_pass_cubit.dart';
 import 'package:edugated/features/gate_pass/gate_pass_initial_params.dart';
 import 'package:edugated/features/gate_pass/gate_pass_navigator.dart';
+import 'package:edugated/features/guest/guest_cubit.dart';
+import 'package:edugated/features/guest/guest_initial_params.dart';
+import 'package:edugated/features/guest/guest_navigator.dart';
 import 'package:edugated/features/home/home_cubit.dart';
 import 'package:edugated/features/home/home_initial_params.dart';
 import 'package:edugated/features/home/home_navigator.dart';
@@ -36,13 +39,17 @@ Future<void> main() async {
   getIt.registerSingleton<ActivityNavigator>(ActivityNavigator(getIt()));
   getIt.registerFactoryParam<ActivityCubit, ActivityInitialParams, dynamic>(
       (params, _) => ActivityCubit(params, getIt(), getIt())..fetchActivity());
+
   getIt.registerSingleton<HomeNavigator>(HomeNavigator());
   getIt.registerSingleton<GatePassNavigator>(GatePassNavigator());
+  getIt.registerSingleton<GuestNavigator>(GuestNavigator());
 
   getIt.registerFactoryParam<HomeCubit, HomeInitialParams, dynamic>(
       (params, _) => HomeCubit(params, getIt()));
   getIt.registerFactoryParam<GatePassCubit, GatePassInitialParams, dynamic>(
       (params, _) => GatePassCubit(params, getIt()));
+  getIt.registerFactoryParam<GuestCubit, GuestInitialParams, dynamic>(
+      (params, _) => GuestCubit(params));
 
   runApp(const MyApp());
 }
