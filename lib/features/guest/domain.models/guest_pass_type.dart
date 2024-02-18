@@ -1,0 +1,3 @@
+enum GuestPassType{
+  active,history
+}

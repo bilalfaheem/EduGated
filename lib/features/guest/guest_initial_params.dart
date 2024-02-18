@@ -1,0 +1,4 @@
+class GuestInitialParams {
+
+const GuestInitialParams();
+}
