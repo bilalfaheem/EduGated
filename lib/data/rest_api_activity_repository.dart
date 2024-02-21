@@ -9,13 +9,14 @@ import 'package:fpdart/fpdart.dart';
 class RestApiActivityRepository implements ActivityRepository {
   final Network _network;
   final AppUrl _appUrl;
-  RestApiActivityRepository(this._network,this._appUrl);
+  RestApiActivityRepository(this._network, this._appUrl);
   @override
   Future<Either<ActivityFailure, List<Activity>>> getActivities(data) =>
-      _network.post(_appUrl.baseUrl + _appUrl.activityEndPoint,data).then((value) =>
-          value.fold((l) => left(ActivityFailure(error: l.error)), (r) {
-            var list = r["data"] as List;
-            return right(
-                list.map((e) => Datum.fromJson(e).toDomain()).toList());
-          }));
+      _network.post(_appUrl.baseUrl + _appUrl.activityEndPoint, data).then(
+          (value) =>
+              value.fold((l) => left(ActivityFailure(error: l.error)), (r) {
+                var list = r["data"] as List;
+                return right(
+                    list.map((e) => Datum.fromJson(e).toDomain()).toList());
+              }));
 }

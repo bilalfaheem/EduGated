@@ -1,3 +1,4 @@
+import 'package:edugated/features/generate_gate_pass/generate_gate_pass_initial_params.dart';
 import 'package:edugated/features/guest/domain.models/guest_pass_type.dart';
 import 'package:edugated/features/guest/guest_state.dart';
 import 'package:edugated/resources/app_assets.dart';
@@ -26,6 +27,7 @@ class _GuestState extends State<GuestPage> {
   @override
   void initState() {
     super.initState();
+    cubit.navigator.context = context;
   }
 
   @override
@@ -38,7 +40,7 @@ class _GuestState extends State<GuestPage> {
             final guestState = state as GuestState;
             return SafeArea(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -47,16 +49,19 @@ class _GuestState extends State<GuestPage> {
                       children: [
                         GestureDetector(
                           onTap: () {
+                            cubit.onTapCreateGuestPass(
+                                const GenerateGatePassInitialParams());
                             // Navigator.push(context, MaterialPageRoute(builder: (context) => GenerateGatePassScreen()));
                           },
                           child: Container(
-                            margin: EdgeInsets.symmetric(vertical: 20),
-                            padding: EdgeInsets.fromLTRB(22, 22, 0, 20),
+                            margin: EdgeInsets.only(top: 20.h, bottom: 10.h),
+                            padding: const EdgeInsets.fromLTRB(22, 22, 0, 20),
                             decoration: BoxDecoration(
                                 color: AppColors.primaryColorLight,
                                 borderRadius: BorderRadius.circular(30)),
                             child: Image.asset(AppAssets.pass,
-                                height: 90, color: AppColors.primaryColorDark),
+                                height: 90.h,
+                                color: AppColors.primaryColorDark),
                           ),
                         ),
                         GestureDetector(
@@ -70,15 +75,15 @@ class _GuestState extends State<GuestPage> {
                               decoration: BoxDecoration(
                                   color: AppColors.primaryColorDark,
                                   borderRadius: BorderRadius.circular(25)),
-                              child: const Center(
+                              child: Center(
                                   child: Row(
                                 children: [
                                   Icon(
                                     Icons.add,
                                     color: AppColors.primaryColorLight,
-                                    size: 40,
+                                    size: 30.h,
                                   ),
-                                  Text(
+                                  const Text(
                                     " Guest Pass",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
@@ -103,13 +108,14 @@ class _GuestState extends State<GuestPage> {
                           },
                           child: AnimatedContainer(
                             width: 150.w,
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                             curve: Curves.fastLinearToSlowEaseIn,
                             // margin: EdgeInsets.only(right: 10),
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 14, horizontal: 15),
                             decoration: BoxDecoration(
-                                color: state.selectedTab == GuestPassType.active
+                                color: guestState.selectedTab ==
+                                        GuestPassType.active
                                     ? AppColors.primaryColorDark
                                     : AppColors.primaryColorLight,
                                 borderRadius: BorderRadius.circular(30)),
@@ -117,7 +123,7 @@ class _GuestState extends State<GuestPage> {
                               child: Text(
                                 "Active",
                                 style: TextStyle(
-                                    color: state.selectedTab ==
+                                    color: guestState.selectedTab ==
                                             GuestPassType.active
                                         ? Colors.white
                                         : AppColors.primaryColorDark,
@@ -128,26 +134,26 @@ class _GuestState extends State<GuestPage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            cubit.onTabUpdated(GuestPassType.active);
+                            cubit.onTabUpdated(GuestPassType.history);
                           },
                           child: AnimatedContainer(
                             width: 150.w,
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                             curve: Curves.fastLinearToSlowEaseIn,
                             // margin: EdgeInsets.only(right: 10),
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 14, horizontal: 15),
                             decoration: BoxDecoration(
-                                color:
-                                    state.selectedTab == GuestPassType.history
-                                        ? AppColors.primaryColorDark
-                                        : AppColors.primaryColorLight,
+                                color: guestState.selectedTab ==
+                                        GuestPassType.history
+                                    ? AppColors.primaryColorDark
+                                    : AppColors.primaryColorLight,
                                 borderRadius: BorderRadius.circular(30)),
                             child: Center(
                               child: Text(
                                 " History",
                                 style: TextStyle(
-                                    color: state.selectedTab ==
+                                    color: guestState.selectedTab ==
                                             GuestPassType.history
                                         ? Colors.white
                                         : AppColors.primaryColorDark,

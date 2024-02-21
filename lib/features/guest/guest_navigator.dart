@@ -1,20 +1,30 @@
+import 'package:edugated/features/generate_gate_pass/generate_gate_pass_navigator.dart';
+import 'package:edugated/navigation/app_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:edugated/main.dart';
 import 'package:edugated/navigation/navigation.dart';
 import 'guest_initial_params.dart';
 import 'guest_page.dart';
 
-class GuestNavigator {}
+class GuestNavigator with GenerateGatePassRoute {
+  GuestNavigator(this.navigator);
 
-mixin GuestRoute {
-openGuest(GuestInitialParams initialParams) {
-navigator.push(
-context,
-GuestPage(cubit: getIt(param1: initialParams)),
-);
+  @override
+  late BuildContext context;
+
+  @override
+  final Navigation navigator;
 }
 
-Navigation get navigator;
+mixin GuestRoute {
+  openGuest(GuestInitialParams initialParams) {
+    navigator.push(
+      context,
+      GuestPage(cubit: getIt(param1: initialParams)),
+    );
+  }
 
-BuildContext get context;
+  Navigation get navigator;
+
+  BuildContext get context;
 }

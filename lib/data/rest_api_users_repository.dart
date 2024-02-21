@@ -7,7 +7,6 @@ import 'package:fpdart/fpdart.dart';
 
 class RestApiUsersRepository implements UsersRepository {
   final Network _network;
-  
 
   RestApiUsersRepository(this._network);
 

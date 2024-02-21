@@ -1,4 +1,4 @@
-abstract class AppUrl{
-   String baseUrl = "" ;
-    String  activityEndPoint = "";
+abstract class AppUrl {
+  String baseUrl = "";
+  String activityEndPoint = "";
 }

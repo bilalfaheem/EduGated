@@ -7,8 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
-
-
   static String toLocalDateTime(String date, String time) {
     DateTime dd = DateFormat(
       'yyyy-MM-dd T HH:mm:ss Z',
@@ -165,7 +163,7 @@ class Utils {
     }
   }
 
-    static bool validateNewPassword(
+  static bool validateNewPassword(
       TextEditingController value, BuildContext context) {
     if (value.text.isEmpty) {
       Utils.toastMessage("Enter your New password", context);

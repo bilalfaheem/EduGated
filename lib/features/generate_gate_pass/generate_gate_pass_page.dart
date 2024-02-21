@@ -1,9 +1,11 @@
+import 'package:edugated/features/generate_gate_pass/widget/add_contact_alert.dart';
 import 'package:edugated/resources/app_assets.dart';
 import 'package:edugated/resources/app_colors.dart';
-import 'package:edugated/widget/content_field.dart';
+import 'package:edugated/widget/content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'generate_gate_pass_cubit.dart';
 import 'generate_gate_pass_state.dart';
 
@@ -88,9 +90,7 @@ class _GenerateGatePassState extends State<GenerateGatePassPage> {
                                 //     value.selectDate(context);
                                 //   },
                                 // ),
-                                SizedBox(
-                                  height: 35,
-                                ),
+                                20.verticalSpace,
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -112,7 +112,7 @@ class _GenerateGatePassState extends State<GenerateGatePassPage> {
                                             color: AppColors.primaryColorDark,
                                             borderRadius:
                                                 BorderRadius.circular(20.r)),
-                                        child: Icon(
+                                        child: const Icon(
                                           Icons.add,
                                           color: Colors.white,
                                         ),
@@ -124,9 +124,36 @@ class _GenerateGatePassState extends State<GenerateGatePassPage> {
                                 Container(
                                   height: 0.4.sh,
                                   decoration: BoxDecoration(
-                                      color: grey,
+                                      color: AppColors.primaryShadeLight
+                                          .withOpacity(0.1),
                                       borderRadius:
                                           BorderRadius.circular(20.r)),
+                                  child: ListView.separated(
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        generateGatePassState.contacts.length,
+                                    itemBuilder: (context, index) {
+                                      final iteration =
+                                          generateGatePassState.contacts[index];
+                                      return Container(
+                                        clipBehavior: Clip.hardEdge,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20.r)),
+                                        child: ListTile(
+                                          dense: true,
+                                          tileColor: AppColors.navBarColor,
+                                          title: Content(
+                                              data: iteration.name, size: 19.h),
+                                          subtitle: Content(
+                                              data: iteration.phone,
+                                              size: 17.h),
+                                        ),
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) =>
+                                        15.verticalSpace,
+                                  ),
                                 ),
 
                                 // DropdownWigdet(
@@ -159,8 +186,8 @@ class _GenerateGatePassState extends State<GenerateGatePassPage> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Container(
-                                      margin:
-                                          EdgeInsets.only(top: 30, bottom: 40),
+                                      margin: const EdgeInsets.only(
+                                          top: 30, bottom: 40),
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(30)),
@@ -177,13 +204,13 @@ class _GenerateGatePassState extends State<GenerateGatePassPage> {
                                                           30))),
                                           onPressed: () {},
                                           child: Padding(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 vertical: 12, horizontal: 30),
                                             child: Text(
-                                                value.firstStep
+                                                generateGatePassState.firstStep
                                                     ? "Next"
                                                     : "Generate",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 20,
                                                     fontWeight: FontWeight.w600,
                                                     color: Colors.white)),

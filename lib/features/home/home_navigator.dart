@@ -7,14 +7,14 @@ import 'home_page.dart';
 class HomeNavigator {}
 
 mixin HomeRoute {
-openHome(HomeInitialParams initialParams) {
-navigator.push(
-context,
-HomePage(cubit: getIt(param1: initialParams)),
-);
-}
+  openHome(HomeInitialParams initialParams) {
+    navigator.push(
+      context,
+      HomePage(cubit: getIt(param1: initialParams)),
+    );
+  }
 
-Navigation get navigator;
+  Navigation get navigator;
 
-BuildContext get context;
+  BuildContext get context;
 }

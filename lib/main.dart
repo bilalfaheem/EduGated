@@ -1,8 +1,10 @@
+import 'package:edugated/data/mock_contacts_repository.dart';
 import 'package:edugated/data/rest_api_activity_repository.dart';
 import 'package:edugated/data/rest_api_users_repository.dart';
 import 'package:edugated/data/stagging_app_url.dart';
 import 'package:edugated/domain/app_url/app_url.dart';
 import 'package:edugated/domain/repositories/activity_repository.dart';
+import 'package:edugated/domain/repositories/contacts.repository.dart';
 import 'package:edugated/domain/repositories/users_repository.dart';
 import 'package:edugated/features/activity/activity_cubit.dart';
 import 'package:edugated/features/activity/activity_initial_params.dart';
@@ -11,6 +13,9 @@ import 'package:edugated/features/activity/activity_page.dart';
 import 'package:edugated/features/gate_pass/gate_pass_cubit.dart';
 import 'package:edugated/features/gate_pass/gate_pass_initial_params.dart';
 import 'package:edugated/features/gate_pass/gate_pass_navigator.dart';
+import 'package:edugated/features/generate_gate_pass/generate_gate_pass_cubit.dart';
+import 'package:edugated/features/generate_gate_pass/generate_gate_pass_initial_params.dart';
+import 'package:edugated/features/generate_gate_pass/generate_gate_pass_navigator.dart';
 import 'package:edugated/features/guest/guest_cubit.dart';
 import 'package:edugated/features/guest/guest_initial_params.dart';
 import 'package:edugated/features/guest/guest_navigator.dart';
@@ -32,24 +37,32 @@ final getIt = GetIt.instance;
 Future<void> main() async {
   getIt.registerSingleton<AppUrl>(StaggingAppUrl());
   getIt.registerSingleton<Network>(NetworkRepository());
+  getIt.registerSingleton<Navigation>(AppNavigator());
+
   getIt.registerSingleton<UsersRepository>(RestApiUsersRepository(getIt()));
   getIt.registerSingleton<ActivityRepository>(
       RestApiActivityRepository(getIt(), getIt()));
-  getIt.registerSingleton<Navigation>(AppNavigator());
-  getIt.registerSingleton<ActivityNavigator>(ActivityNavigator(getIt()));
-  getIt.registerFactoryParam<ActivityCubit, ActivityInitialParams, dynamic>(
-      (params, _) => ActivityCubit(params, getIt(), getIt())..fetchActivity());
+  getIt.registerSingleton<ContactsRepository>(MockContactsRepository());
 
+  getIt.registerSingleton<ActivityNavigator>(ActivityNavigator(getIt()));
   getIt.registerSingleton<HomeNavigator>(HomeNavigator());
   getIt.registerSingleton<GatePassNavigator>(GatePassNavigator());
-  getIt.registerSingleton<GuestNavigator>(GuestNavigator());
+  getIt.registerSingleton<GuestNavigator>(GuestNavigator(getIt()));
+  getIt.registerSingleton<GenerateGatePassNavigator>(
+      GenerateGatePassNavigator());
 
+  getIt.registerFactoryParam<ActivityCubit, ActivityInitialParams, dynamic>(
+      (params, _) => ActivityCubit(params, getIt(), getIt())..fetchActivity());
   getIt.registerFactoryParam<HomeCubit, HomeInitialParams, dynamic>(
       (params, _) => HomeCubit(params, getIt()));
+  getIt.registerFactoryParam<GuestCubit, GuestInitialParams, dynamic>(
+      (params, _) => GuestCubit(params, getIt()));
   getIt.registerFactoryParam<GatePassCubit, GatePassInitialParams, dynamic>(
       (params, _) => GatePassCubit(params, getIt()));
-  getIt.registerFactoryParam<GuestCubit, GuestInitialParams, dynamic>(
-      (params, _) => GuestCubit(params));
+  getIt.registerFactoryParam<
+      GenerateGatePassCubit,
+      GenerateGatePassInitialParams,
+      dynamic>((params, _) => GenerateGatePassCubit(params, getIt())..fetchContacts());
 
   runApp(const MyApp());
 }

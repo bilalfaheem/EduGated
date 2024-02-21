@@ -1,5 +1,3 @@
-
-
 import 'datum.dart';
 
 class ActivityJson {
@@ -16,6 +14,4 @@ class ActivityJson {
             ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
             .toList(),
       );
-
-
 }

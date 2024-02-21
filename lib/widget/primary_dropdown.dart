@@ -9,7 +9,13 @@ class PrimaryDropDown extends StatefulWidget {
   final void Function(String?)? onChanged;
   final String? Function(String?)? validator;
 
-  const PrimaryDropDown({super.key, this.validator, required this.labelText, required this.onChanged, required this.list, this.hintText});
+  const PrimaryDropDown(
+      {super.key,
+      this.validator,
+      required this.labelText,
+      required this.onChanged,
+      required this.list,
+      this.hintText});
 
   @override
   State<PrimaryDropDown> createState() => _PrimaryDropDownState();
@@ -44,7 +50,8 @@ class _PrimaryDropDownState extends State<PrimaryDropDown> {
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: AppColors.highlightGrey, width: 2.0),
+              borderSide:
+                  BorderSide(color: AppColors.highlightGrey, width: 2.0),
             ),
 
             isDense: true,
@@ -55,7 +62,6 @@ class _PrimaryDropDownState extends State<PrimaryDropDown> {
             // focusedBorder: textFieldDecoration,
             filled: true,
             fillColor: Colors.white,
-            
           ),
           items: widget.list,
           onChanged: widget.onChanged,

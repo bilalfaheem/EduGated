@@ -1,3 +1,1 @@
-enum GuestPassType{
-  active,history
-}
+enum GuestPassType { active, history }

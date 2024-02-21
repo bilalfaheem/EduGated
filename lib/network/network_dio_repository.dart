@@ -9,7 +9,7 @@ import 'package:dio/dio.dart';
 class NetworkDioRepository implements Network {
   final Dio dio = Dio(
     BaseOptions(
-        baseUrl:" AppUrl.baseUrl",
+        baseUrl: " AppUrl.baseUrl",
         connectTimeout: Duration(seconds: 20),
         headers: {
           'Content-Type': 'application/json',
@@ -31,21 +31,22 @@ class NetworkDioRepository implements Network {
     }
     return response?.data;
   }
-@override
-    Future<Either<NetworkFailure, dynamic>> post(String url,Map<String,dynamic> data)async{
+
+  @override
+  Future<Either<NetworkFailure, dynamic>> post(
+      String url, Map<String, dynamic> data) async {
     Response? response;
     try {
-      response = await dio.get(
-        url
-        // queryParameters: queryParameters,
-      );
+      response = await dio.get(url
+          // queryParameters: queryParameters,
+          );
     } on DioException catch (e) {
       _handleException(e);
     } on SocketException catch (_) {
       throw InternetException('No Internet Connection.');
     }
     return response?.data;
-    } 
+  }
 
   void _handleException(DioException e) {
     if (e.type == DioExceptionType.badResponse) {
