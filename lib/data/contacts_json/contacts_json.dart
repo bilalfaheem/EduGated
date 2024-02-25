@@ -1,4 +1,3 @@
-
 import 'contact_json.dart';
 
 class ContactsJson {

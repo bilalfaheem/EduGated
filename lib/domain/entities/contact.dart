@@ -28,13 +28,6 @@ class Contact extends Equatable {
         userType = "";
 
   @override
-  List<Object?> get props => [
-        id,
-        userId,
-        name,
-        phone,
-        type,
-        cnicImage,
-        userType
-      ];
+  List<Object?> get props =>
+      [id, userId, name, phone, type, cnicImage, userType];
 }

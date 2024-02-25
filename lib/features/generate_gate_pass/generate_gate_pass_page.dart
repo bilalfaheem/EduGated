@@ -1,3 +1,4 @@
+import 'package:edugated/features/add_contact/add_contact_initial_params.dart';
 import 'package:edugated/features/generate_gate_pass/widget/add_contact_alert.dart';
 import 'package:edugated/resources/app_assets.dart';
 import 'package:edugated/resources/app_colors.dart';
@@ -26,6 +27,7 @@ class _GenerateGatePassState extends State<GenerateGatePassPage> {
 
   @override
   void initState() {
+    cubit.navigator.context = context;
     super.initState();
   }
 
@@ -104,7 +106,9 @@ class _GenerateGatePassState extends State<GenerateGatePassPage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        addContactAlert(context);
+                                        cubit.onTapAddContact(
+                                            const AddContactInitialParams());
+                                        // addContactAlert(context);
                                       },
                                       child: Container(
                                         padding: EdgeInsets.all(10.r),
