@@ -31,4 +31,16 @@ class Pass {
         contactName = "",
         contactPhone = "",
         contactEmail = "";
+  @override
+  List<Object?> get props => [
+        id,
+        passDate,
+        userId,
+        contactId,
+        qrCode,
+        userName,
+        contactName,
+        contactPhone,
+        contactEmail,
+      ];
 }

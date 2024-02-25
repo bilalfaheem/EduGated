@@ -8,10 +8,6 @@ class GuestPassNavigator {}
 
 mixin GuestPassRoute {
   openGuestPass(GuestPassInitialParams initialParams) {
-    navigator.push(
-      context,
-      GuestPassPage(cubit: getIt(param1: initialParams)),
-    );
     navigator.pushReplacement(
       context,
       GuestPassPage(cubit: getIt(param1: initialParams)),

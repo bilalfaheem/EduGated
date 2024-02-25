@@ -1,4 +1,3 @@
-import 'package:edugated/data/mock_contacts_repository.dart';
 import 'package:edugated/data/rest_api_activity_repository.dart';
 import 'package:edugated/data/rest_api_add_contact_repository.dart';
 import 'package:edugated/data/rest_api_contacts_repository.dart';
@@ -29,6 +28,9 @@ import 'package:edugated/features/generate_gate_pass/generate_gate_pass_navigato
 import 'package:edugated/features/guest/guest_cubit.dart';
 import 'package:edugated/features/guest/guest_initial_params.dart';
 import 'package:edugated/features/guest/guest_navigator.dart';
+import 'package:edugated/features/guest_pass/guest_pass_cubit.dart';
+import 'package:edugated/features/guest_pass/guest_pass_initial_params.dart';
+import 'package:edugated/features/guest_pass/guest_pass_navigator.dart';
 import 'package:edugated/features/home/home_cubit.dart';
 import 'package:edugated/features/home/home_initial_params.dart';
 import 'package:edugated/features/home/home_navigator.dart';
@@ -86,6 +88,7 @@ Future<void> main() async {
   getIt.registerSingleton<GuestNavigator>(GuestNavigator(getIt()));
   getIt.registerSingleton<GenerateGatePassNavigator>(
       GenerateGatePassNavigator(getIt()));
+  getIt.registerSingleton<GuestPassNavigator>(GuestPassNavigator());
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Use Case >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -115,6 +118,10 @@ Future<void> main() async {
             ..fetchContacts());
   getIt.registerFactoryParam<AddContactCubit, AddContactInitialParams, dynamic>(
       (param, _) => AddContactCubit(param, getIt(), getIt()));
+  getIt.registerFactoryParam<GuestPassCubit, GuestPassInitialParams, dynamic>(
+      (param, _) => GuestPassCubit(
+            param,
+          ));
 
   runApp(const MyApp());
 }

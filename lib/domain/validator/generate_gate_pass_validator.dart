@@ -23,7 +23,7 @@ class GenerateGatePassValidator {
           "user_id": generateGatePass.userId,
           "contact_id": generateGatePass.contactId,
           "pass_date": generateGatePass.passDate
-              .toFormatDateTime(format: "yyyy-mm-dd hh:mm:ss"),
+              .toFormatDateTime(format: "yyyy-MM-dd hh:mm:ss"),
         },
       );
     }

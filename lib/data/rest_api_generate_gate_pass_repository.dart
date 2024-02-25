@@ -18,5 +18,5 @@ class RestApiGenerateGatePassRepository implements GenerateGatePassRepository {
           .then((value) => value.fold(
               (err) => left(GenerateGatePassFailure(error: err.error)),
               (response) => right(
-                  GenerateGatePassJsonData.fromJson(response).toDomain())));
+                  GenerateGatePassJsonData.fromJson(response["data"]).toDomain())));
 }
