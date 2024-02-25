@@ -1,3 +1,4 @@
+import 'package:edugated/data/guest_json/rest_api_guest_repository.dart';
 import 'package:edugated/data/rest_api_activity_repository.dart';
 import 'package:edugated/data/rest_api_add_contact_repository.dart';
 import 'package:edugated/data/rest_api_contacts_repository.dart';
@@ -9,6 +10,7 @@ import 'package:edugated/domain/repositories/activity_repository.dart';
 import 'package:edugated/domain/repositories/add_contact_repository.dart';
 import 'package:edugated/domain/repositories/contacts.repository.dart';
 import 'package:edugated/domain/repositories/generate_gate_pass_repository.dart';
+import 'package:edugated/domain/repositories/guest_repository.dart';
 import 'package:edugated/domain/repositories/users_repository.dart';
 import 'package:edugated/domain/use_cases/add_contact_use_case.dart';
 import 'package:edugated/domain/use_cases/generate_gate_pass_use_case.dart';
@@ -69,6 +71,8 @@ Future<void> main() async {
       RestApiContactsRepository(getIt(), getIt()));
   getIt.registerSingleton<GenerateGatePassRepository>(
       RestApiGenerateGatePassRepository(getIt(), getIt()));
+  getIt.registerSingleton<GuestRepository>(
+      RestApiGuestRepository(getIt(), getIt()));
 
   // getIt.registerSingleton<ContactsRepository>(MockContactsRepository());
   getIt.registerSingleton<AddContactRepository>(
@@ -108,7 +112,7 @@ Future<void> main() async {
   getIt.registerFactoryParam<HomeCubit, HomeInitialParams, dynamic>(
       (params, _) => HomeCubit(params, getIt()));
   getIt.registerFactoryParam<GuestCubit, GuestInitialParams, dynamic>(
-      (params, _) => GuestCubit(params, getIt()));
+      (params, _) => GuestCubit(params, getIt(), getIt())..fetchGuestPass());
   getIt.registerFactoryParam<GatePassCubit, GatePassInitialParams, dynamic>(
       (params, _) => GatePassCubit(params, getIt()));
   getIt.registerFactoryParam<GenerateGatePassCubit,

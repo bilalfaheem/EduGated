@@ -1,8 +1,11 @@
+import 'package:edugated/features/activity/widget/activity_tile.dart';
 import 'package:edugated/features/generate_gate_pass/generate_gate_pass_initial_params.dart';
 import 'package:edugated/features/guest/domain.models/guest_pass_type.dart';
 import 'package:edugated/features/guest/guest_state.dart';
 import 'package:edugated/resources/app_assets.dart';
 import 'package:edugated/resources/app_colors.dart';
+import 'package:edugated/resources/utils.dart';
+import 'package:edugated/widget/content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -166,7 +169,6 @@ class _GuestState extends State<GuestPage> {
                     ),
                   ],
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -182,52 +184,38 @@ class _GuestState extends State<GuestPage> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 7,
+                Container(
+                  height: 0.4.sh,
+                  decoration: BoxDecoration(
+                      color: AppColors.primaryShadeLight.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20.r)),
+                  child: guestState.error != null
+                      ? Center(
+                          child: Content(
+                            data: guestState.error!,
+                            size: 19.r,
+                            color: Colors.red,
+                          ),
+                        )
+                      : guestState.isLoading
+                          ? Utils.showLoading(context)
+                          : ListView.separated(
+                              shrinkWrap: true,
+                              itemCount:
+                                  guestState.selectedTab == GuestPassType.active
+                                      ? guestState.active.length
+                                      : guestState.history.length,
+                              itemBuilder: (context, index) {
+                                final iteration = guestState.selectedTab ==
+                                        GuestPassType.active
+                                    ? guestState.active[index]
+                                    : guestState.history[index];
+                                return ActivityTile();
+                              },
+                              separatorBuilder: (context, index) =>
+                                  15.verticalSpace,
+                            ),
                 ),
-                // employeeActivityTile(false, "name", "true", "2023-12-06T10:52:51.000000")
-                // FutureBuilder(
-                //     future: getEmployeeActivityFunc(
-                //         "my_activity", "user_id", attendeesId),
-                //     builder: (context, snapshot) {
-                //       if (snapshot.connectionState == ConnectionState.waiting) {
-                //         return Column(
-                //           mainAxisAlignment: MainAxisAlignment.center,
-                //           crossAxisAlignment: CrossAxisAlignment.center,
-                //           children: [
-                //             SizedBox(
-                //               height: 200,
-                //             ),
-                //             Center(
-                //                 child: CircularProgressIndicator(
-                //               strokeWidth: 1.5,
-                //               color: AppColors.primaryColorDark,
-                //             ))
-                //           ],
-                //         );
-                //       } else if (snapshot.hasData) {
-                //         return Column(children: [
-                //           ListView.builder(
-                //               padding: EdgeInsets.zero,
-                //               physics: NeverScrollableScrollPhysics(),
-                //               shrinkWrap: true,
-                //               itemCount: employeeActivityList.length,
-                //               reverse: true,
-                //               // detailList.reviews?.length,
-                //               itemBuilder: (BuildContext context, int i) {
-                //                 return employeeActivityWidget(
-                //                     false,
-                //                     attendeesName,
-                //                     employeeActivityList[i].activityDate.toString(),
-                //                     employeeActivityList[i].activityList);
-                //                 // Text(
-                //                 //     allActivityList[i].activityDate.toString());
-                //               }),
-                //         ]);
-                //       } else {
-                //         return Container();
-                //       }
-                //     }),
               ],
             ));
           }),

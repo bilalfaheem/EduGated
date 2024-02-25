@@ -6,6 +6,6 @@ import 'guest_pass_state.dart';
 class GuestPassCubit extends Cubit<GuestPassState> {
   final GuestPassInitialParams initialParams;
 
-
-  GuestPassCubit(this.initialParams) : super(GuestPassState.initial(initialParams: initialParams));
+  GuestPassCubit(this.initialParams)
+      : super(GuestPassState.initial(initialParams: initialParams));
 }

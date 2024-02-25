@@ -43,45 +43,48 @@ class _GuestPassState extends State<GuestPassPage> {
           ),
         ),
         body: BlocBuilder(
-          bloc: cubit,
-          builder: (context, state) {
-          final guestPassState = state as GuestPassState;
-          return Center(
-            child: Container(
-                      padding: const EdgeInsets.all(30),
-                      margin: const EdgeInsets.all(30),
-
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryColorLight,
-                        borderRadius: BorderRadius.circular(20.r)
-                      ),
-
-              child: Column(
-                children: [
-                  Container(
-                    width: 200.h,
-                    height: 200.h,
-                      padding: const EdgeInsets.all(30),
-                      decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: PrettyQrView(
-                        qrImage: QrImage(QrCode.fromData(
-                            data: cubit.initialParams.pass.qrCode,
-                            errorCorrectLevel: 1)),
-                        decoration: const PrettyQrDecoration(
-                            shape: PrettyQrSmoothSymbol(
-                                color: AppColors.primaryColorDark, roundFactor: 1)),
-                      )),
-                  GuestPassTile(title: "Name", value:cubit.initialParams.pass.contactName),
-                  GuestPassTile(title: "Phone", value:cubit.initialParams.pass.contactPhone),
-                  GuestPassTile(title: "Date", value:cubit.initialParams.pass.passDate.toFormatDateTime(format: "dd/MMM/yy")),
-
-                    
-                ],
-              ),
-            ),
-          );
-        }));
+            bloc: cubit,
+            builder: (context, state) {
+              final guestPassState = state as GuestPassState;
+              return Center(
+                child: Container(
+                  padding: const EdgeInsets.all(30),
+                  margin: const EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                      color: AppColors.primaryColorLight,
+                      borderRadius: BorderRadius.circular(20.r)),
+                  child: Column(
+                    children: [
+                      Container(
+                          width: 200.h,
+                          height: 200.h,
+                          padding: const EdgeInsets.all(30),
+                          decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(30)),
+                          child: PrettyQrView(
+                            qrImage: QrImage(QrCode.fromData(
+                                data: cubit.initialParams.pass.qrCode,
+                                errorCorrectLevel: 1)),
+                            decoration: const PrettyQrDecoration(
+                                shape: PrettyQrSmoothSymbol(
+                                    color: AppColors.primaryColorDark,
+                                    roundFactor: 1)),
+                          )),
+                      GuestPassTile(
+                          title: "Name",
+                          value: cubit.initialParams.pass.contactName),
+                      GuestPassTile(
+                          title: "Phone",
+                          value: cubit.initialParams.pass.contactPhone),
+                      GuestPassTile(
+                          title: "Date",
+                          value: cubit.initialParams.pass.passDate
+                              .toFormatDateTime(format: "dd/MMM/yy")),
+                    ],
+                  ),
+                ),
+              );
+            }));
   }
 }

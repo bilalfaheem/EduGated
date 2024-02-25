@@ -10,7 +10,8 @@ class AppNavigator implements Navigation {
       ),
     );
   }
-   @override
+
+  @override
   pushReplacement(BuildContext context, Widget page) {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(

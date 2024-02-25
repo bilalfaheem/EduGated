@@ -1,4 +1,5 @@
 import 'package:edugated/features/activity/activity_state.dart';
+import 'package:edugated/features/activity/widget/activity_tile.dart';
 import 'package:edugated/resources/app_colors.dart';
 import 'package:edugated/resources/utils.dart';
 import 'package:edugated/widget/content.dart';
@@ -92,24 +93,7 @@ class _ActivityState extends State<ActivityPage> {
                 } else {
                   return const Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          // Container(
-                          //   margin: const EdgeInsets.only(left: 20),
-                          //   child: Text(
-                          //     DateFormat('dd MMM yyy').format(
-                          //         DateTime.parse("2023-12-06T10:52:51.000000")),
-                          //     style: const TextStyle(
-                          //       fontSize: 16,
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
+                      ActivityTile(),
                       // employeeActivityTile(
                       //     false, "name", "true", "2023-12-06T10:52:51.000000")
                     ],
