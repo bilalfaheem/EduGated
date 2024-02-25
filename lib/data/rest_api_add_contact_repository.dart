@@ -12,9 +12,12 @@ class RestApiAddContactRepository implements AddContactRepository {
   RestApiAddContactRepository(this._network, this._appUrl);
 
   @override
-  Future<Either<AddContactFailure, ResponseBody>> addContact(data) => _network
-      .post(_appUrl.baseUrl + _appUrl.addContactEndPoint, data)
-      .then((value) => value.fold(
-          (err) => left(AddContactFailure(error: err.error)),
-          (response) => right(AddContactJson.fromJson(response).toDomain())));
+  Future<Either<AddContactFailure, ResponseBody>> addContact(
+          data, file) =>
+      _network
+          .postFile(_appUrl.baseUrl + _appUrl.addContactEndPoint, data, file)
+          .then((value) => value.fold(
+              (err) => left(AddContactFailure(error: err.error)),
+              (response) =>
+                  right(AddContactJson.fromJson(response).toDomain())));
 }

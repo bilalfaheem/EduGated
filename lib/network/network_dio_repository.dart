@@ -75,4 +75,11 @@ class NetworkDioRepository implements Network {
       throw RequestTimeOut('');
     }
   }
+
+  @override
+  Future<Either<NetworkFailure, dynamic>> postFile(
+      String url, Map<String, dynamic> data, Map<String, String> file) {
+    // TODO: implement postFile
+    throw UnimplementedError();
+  }
 }

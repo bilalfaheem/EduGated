@@ -1,8 +1,11 @@
+import 'package:edugated/domain/entities/generate_gate_pass.dart';
 import 'package:edugated/features/add_contact/add_contact_initial_params.dart';
-import 'package:edugated/features/generate_gate_pass/widget/add_contact_alert.dart';
 import 'package:edugated/resources/app_assets.dart';
 import 'package:edugated/resources/app_colors.dart';
+import 'package:edugated/resources/utils.dart';
 import 'package:edugated/widget/content.dart';
+import 'package:edugated/widget/content_field.dart';
+import 'package:edugated/widget/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,308 +31,181 @@ class _GenerateGatePassState extends State<GenerateGatePassPage> {
   @override
   void initState() {
     cubit.navigator.context = context;
+    cubit.datePickerService.context = context;
+    cubit.context = context;
+    cubit.dateController = TextEditingController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Scaffold(
-      body: SafeArea(
-          child: SingleChildScrollView(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Content(
+          data: "Generate Pass",
+          size: 24.h,
+          weight: FontWeight.w600,
+        ),
+      ),
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-                margin: EdgeInsets.only(top: 20),
+                margin: EdgeInsets.symmetric(vertical: 10.h),
                 child: Column(children: [
                   Image.asset(
                     AppAssets.logo,
                     height: 100.h,
                   ),
-                  Container(
-                      child: Text(
-                    "Generate Pass",
-                    style:
-                        TextStyle(fontSize: 25.h, fontWeight: FontWeight.w600),
-                  )),
                 ])),
             BlocBuilder(
                 bloc: cubit,
                 builder: (context, state) {
                   final generateGatePassState = state as GenerateGatePassState;
-                  return state.firstStep
-                      ? Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20.r, vertical: 20.r),
-                          margin: EdgeInsets.symmetric(horizontal: 20.r),
-                          decoration: BoxDecoration(
-                              color: AppColors.primaryShadeLight,
-                              borderRadius: BorderRadius.circular(20.r)),
-                          child: Form(
-                            // key: addFormKey,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Date",
-                                      style: TextStyle(
-                                          color: AppColors.primaryColorDark,
-                                          fontSize: 22.r,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ],
-                                ),
-                                // ContextField(
-                                //   controller: value.dataController,
-                                //   hintText: "Name",
-                                //   readOnly: true,
-                                //   hintColor: Colors.black,
-                                //   ontap: () {
-                                //     value.selectDate(context);
-                                //   },
-                                // ),
-                                20.verticalSpace,
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Contact",
-                                      style: TextStyle(
-                                          color: AppColors.primaryColorDark,
-                                          fontSize: 22.r,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        cubit.onTapAddContact(
-                                            const AddContactInitialParams());
-                                        // addContactAlert(context);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(10.r),
-                                        decoration: BoxDecoration(
-                                            color: AppColors.primaryColorDark,
-                                            borderRadius:
-                                                BorderRadius.circular(20.r)),
-                                        child: const Icon(
-                                          Icons.add,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-
-                                Container(
-                                  height: 0.4.sh,
+                  return Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.r, vertical: 20.r),
+                    margin: EdgeInsets.symmetric(horizontal: 20.r),
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryShadeLight,
+                        borderRadius: BorderRadius.circular(20.r)),
+                    child: Form(
+                      // key: addFormKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Content(
+                              data: "Date",
+                              size: 22.r,
+                              color: AppColors.primaryColorDark,
+                              weight: FontWeight.w700),
+                          ContentField(
+                            readOnly: true,
+                            controller: cubit.dateController,
+                            hintText: "Select Date",
+                            ontap: () async => await cubit.onTapDate(),
+                          ),
+                          15.verticalSpace,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Contact",
+                                style: TextStyle(
+                                    color: AppColors.primaryColorDark,
+                                    fontSize: 22.r,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  cubit.onTapAddContact(
+                                      const AddContactInitialParams());
+                                  // addContactAlert(context);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(10.r),
                                   decoration: BoxDecoration(
-                                      color: AppColors.primaryShadeLight
-                                          .withOpacity(0.1),
+                                      color: AppColors.primaryColorDark,
                                       borderRadius:
                                           BorderRadius.circular(20.r)),
-                                  child: ListView.separated(
-                                    shrinkWrap: true,
-                                    itemCount:
-                                        generateGatePassState.contacts.length,
-                                    itemBuilder: (context, index) {
-                                      final iteration =
-                                          generateGatePassState.contacts[index];
-                                      return Container(
-                                        clipBehavior: Clip.hardEdge,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20.r)),
-                                        child: ListTile(
-                                          dense: true,
-                                          tileColor: AppColors.navBarColor,
-                                          title: Content(
-                                              data: iteration.name, size: 19.h),
-                                          subtitle: Content(
-                                              data: iteration.phone,
-                                              size: 17.h),
-                                        ),
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) =>
-                                        15.verticalSpace,
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.white,
                                   ),
                                 ),
-
-                                // DropdownWigdet(
-                                //   labelText: 'Pass Type',
-                                //   hintText: 'Select Pass Type',
-                                //   validator: (txt) {
-                                //     if (txt.toString().isEmpty) {
-                                //       return "* Required";
-                                //     } else
-                                //       return null;
-                                //   },
-                                //   list: ['UBIT', 'KUBS', "Mass Communication"]
-                                //       .map((String value) {
-                                //     return DropdownMenuItem<String>(
-                                //       value: value,
-                                //       child: Text(
-                                //         value,
-                                //         style: TextStyle(
-                                //             color: Colors.black,
-                                //             fontSize: 16.sp),
-                                //       ),
-                                //     );
-                                //   }).toList(),
-                                //   onChanged: (value) {
-                                //     print(value.toString());
-                                //     // genderValue = value;
-                                //   },
-                                // ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 30, bottom: 40),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(30)),
-                                      child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              primary:
-                                                  AppColors.primaryColorDark,
-                                              // shadowColor: Colors.transparent,
-                                              // onPrimary: itemGradient1Light,
-                                              // animationDuration: defaultAnimationDelay,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30))),
-                                          onPressed: () {},
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 12, horizontal: 30),
-                                            child: Text(
-                                                generateGatePassState.firstStep
-                                                    ? "Next"
-                                                    : "Generate",
-                                                style: const TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.white)),
-                                          )),
+                              )
+                            ],
+                          ),
+                          10.verticalSpace,
+                          Container(
+                            height: 0.4.sh,
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryShadeLight
+                                    .withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(20.r)),
+                            child: generateGatePassState.error != null
+                                ? Center(
+                                    child: Content(
+                                      data: generateGatePassState.error!,
+                                      size: 19.r,
+                                      color: Colors.red,
                                     ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      : Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20.r),
-                          padding: EdgeInsets.symmetric(horizontal: 20.r),
-                          decoration: BoxDecoration(
-                              color: AppColors.primaryColorLight,
-                              borderRadius: BorderRadius.circular(20.r)),
-                          child: Form(
-                            // key: addFormKey,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 35,
-                                ),
-                                // ContextField(
-                                //     controller: value.addNameController,
-                                //     hintText: "Name"),
-                                // ContextField(
-                                //     controller: value.addCNICController,
-                                //     hintText: "CNIC"),
-                                // ContextField(
-                                //     controller: value.addPhoneController,
-                                //     hintText: "Mobile Number"),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    state.firstStep
-                                        ? Container(
-                                            margin: EdgeInsets.only(
-                                                top: 30, bottom: 40),
+                                  )
+                                : generateGatePassState.isLoading
+                                    ? Utils.showLoading(context)
+                                    : ListView.separated(
+                                        shrinkWrap: true,
+                                        itemCount: generateGatePassState
+                                            .contacts.length,
+                                        itemBuilder: (context, index) {
+                                          final iteration =
+                                              generateGatePassState
+                                                  .contacts[index];
+                                          return Container(
+                                            clipBehavior: Clip.hardEdge,
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                    primary: AppColors
-                                                        .primaryColorDark,
-                                                    // shadowColor: Colors.transparent,
-                                                    // onPrimary: itemGradient1Light,
-                                                    // animationDuration: defaultAnimationDelay,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30))),
-                                                onPressed: () {
-                                                  cubit.onStepUpdate(false);
-                                                },
-                                                child: Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 12,
-                                                      horizontal: 30),
-                                                  child: Text("Next",
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: Colors.white)),
-                                                )),
-                                          )
-                                        : Container(
-                                            margin: EdgeInsets.only(
-                                                top: 30, bottom: 40),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                    primary: AppColors
-                                                        .primaryColorDark,
-                                                    // shadowColor: Colors.transparent,
-                                                    // onPrimary: itemGradient1Light,
-                                                    // animationDuration: defaultAnimationDelay,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30))),
-                                                onPressed: () {},
-                                                child: Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 12,
-                                                      horizontal: 30),
-                                                  child: Text("Generate",
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: Colors.white)),
-                                                )),
-                                          ),
-                                  ],
-                                )
-                              ],
-                            ),
+                                                    BorderRadius.circular(
+                                                        20.r)),
+                                            child: ListTile(
+                                              onTap: () => cubit
+                                                  .onTapContact(iteration.id),
+                                              dense: true,
+                                              tileColor: generateGatePassState
+                                                          .contactId ==
+                                                      iteration.id
+                                                  ? AppColors.primaryColorDark
+                                                  : AppColors.navBarColor,
+                                              title: Content(
+                                                data: iteration.name,
+                                                size: 19.h,
+                                                color: generateGatePassState
+                                                            .contactId ==
+                                                        iteration.id
+                                                    ? AppColors.white
+                                                    : null,
+                                              ),
+                                              subtitle: Content(
+                                                data: iteration.phone,
+                                                size: 17.h,
+                                                color: generateGatePassState
+                                                            .contactId ==
+                                                        iteration.id
+                                                    ? AppColors.white
+                                                    : null,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        separatorBuilder: (context, index) =>
+                                            15.verticalSpace,
+                                      ),
                           ),
-                        );
+                          15.verticalSpace,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              PrimaryButton(
+                                  width: 200,
+                                  loading: state.isgenerateLoading,
+                                  title: 'Generate',
+                                  onTap: () async => cubit.onTapGenerate(
+                                      GenerateGatePass(
+                                          "2",
+                                          generateGatePassState.contactId ?? "",
+                                          cubit.dateController.text))),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  );
                 })
           ],
         ),
-      )),
-    ));
+      ),
+    );
   }
 }

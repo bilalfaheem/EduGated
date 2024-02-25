@@ -1,5 +1,7 @@
 abstract class AppUrl {
-  String baseUrl = "";
   String activityEndPoint = "";
   String addContactEndPoint = "";
+  String baseUrl = "";
+  String contactsEndPoint = "";
+  String generateGatePassEndPoint = "";
 }

@@ -24,10 +24,14 @@ class AddContactCubit extends Cubit<AddContactState> {
           (contactImage) => emit(state.copyWith(contactImage: contactImage))));
 
   onTapAdd(AddContact addContact) {
-    state.copyWith(isLoading: true);
+    emit(state.copyWith(isLoading: true));
     _addContactUseCase.execute(addContact).then((value) => value.fold((l) {
           emit(state.copyWith(isLoading: false));
           Utils.toastMessage(l.error, context);
-        }, (r) => emit(state.copyWith(isLoading: false))));
+        }, (r) {
+          emit(state.copyWith(isLoading: false));
+          Utils.toastMessage(r.message.toString(), context);
+          Navigator.pop(context);
+        }));
   }
 }

@@ -4,6 +4,6 @@ class ResponseBody {
   ResponseBody({required this.status, required this.message});
 
   const ResponseBody.empty()
-      : status =false,
+      : status = false,
         message = "";
 }

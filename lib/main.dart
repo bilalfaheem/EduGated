@@ -1,19 +1,23 @@
 import 'package:edugated/data/mock_contacts_repository.dart';
 import 'package:edugated/data/rest_api_activity_repository.dart';
 import 'package:edugated/data/rest_api_add_contact_repository.dart';
+import 'package:edugated/data/rest_api_contacts_repository.dart';
+import 'package:edugated/data/rest_api_generate_gate_pass_repository.dart';
 import 'package:edugated/data/rest_api_users_repository.dart';
 import 'package:edugated/data/stagging_app_url.dart';
 import 'package:edugated/domain/app_url/app_url.dart';
 import 'package:edugated/domain/repositories/activity_repository.dart';
 import 'package:edugated/domain/repositories/add_contact_repository.dart';
 import 'package:edugated/domain/repositories/contacts.repository.dart';
+import 'package:edugated/domain/repositories/generate_gate_pass_repository.dart';
 import 'package:edugated/domain/repositories/users_repository.dart';
 import 'package:edugated/domain/use_cases/add_contact_use_case.dart';
-import 'package:edugated/domain/use_cases/add_contact_validator.dart';
+import 'package:edugated/domain/use_cases/generate_gate_pass_use_case.dart';
+import 'package:edugated/domain/validator/add_contact_validator.dart';
+import 'package:edugated/domain/validator/generate_gate_pass_validator.dart';
 import 'package:edugated/features/activity/activity_cubit.dart';
 import 'package:edugated/features/activity/activity_initial_params.dart';
 import 'package:edugated/features/activity/activity_navigator.dart';
-import 'package:edugated/features/activity/activity_page.dart';
 import 'package:edugated/features/add_contact/add_contact_cubit.dart';
 import 'package:edugated/features/add_contact/add_contact_initial_params.dart';
 import 'package:edugated/features/gate_pass/gate_pass_cubit.dart';
@@ -34,6 +38,7 @@ import 'package:edugated/navigation/navigation.dart';
 import 'package:edugated/network/network.dart';
 import 'package:edugated/network/network_repository.dart';
 import 'package:edugated/resources/validator.dart';
+import 'package:edugated/services/date_picker_service.dart';
 import 'package:edugated/services/pick_image_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,19 +56,27 @@ Future<void> main() async {
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Services >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   getIt.registerSingleton<PickImageService>(PickImageService());
+  getIt.registerSingleton<DatePickerService>(DatePickerService());
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Repository >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   getIt.registerSingleton<UsersRepository>(RestApiUsersRepository(getIt()));
   getIt.registerSingleton<ActivityRepository>(
       RestApiActivityRepository(getIt(), getIt()));
-  getIt.registerSingleton<ContactsRepository>(MockContactsRepository());
+  getIt.registerSingleton<ContactsRepository>(
+      RestApiContactsRepository(getIt(), getIt()));
+  getIt.registerSingleton<GenerateGatePassRepository>(
+      RestApiGenerateGatePassRepository(getIt(), getIt()));
+
+  // getIt.registerSingleton<ContactsRepository>(MockContactsRepository());
   getIt.registerSingleton<AddContactRepository>(
       RestApiAddContactRepository(getIt(), getIt()));
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< validation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   getIt.registerSingleton<AddContactValidator>(AddContactValidator(getIt()));
+  getIt.registerSingleton<GenerateGatePassValidator>(
+      GenerateGatePassValidator(getIt()));
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Navigation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -77,6 +90,10 @@ Future<void> main() async {
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Use Case >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   getIt.registerSingleton<AddContactUseCase>(AddContactUseCase(
+    getIt(),
+    getIt(),
+  ));
+  getIt.registerSingleton<GenerateGatePassUseCase>(GenerateGatePassUseCase(
     getIt(),
     getIt(),
   ));
@@ -94,7 +111,8 @@ Future<void> main() async {
   getIt.registerFactoryParam<GenerateGatePassCubit,
           GenerateGatePassInitialParams, dynamic>(
       (params, _) =>
-          GenerateGatePassCubit(params, getIt(), getIt())..fetchContacts());
+          GenerateGatePassCubit(params, getIt(), getIt(), getIt(), getIt())
+            ..fetchContacts());
   getIt.registerFactoryParam<AddContactCubit, AddContactInitialParams, dynamic>(
       (param, _) => AddContactCubit(param, getIt(), getIt()));
 
@@ -112,9 +130,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(fontFamily: GoogleFonts.nunito().fontFamily),
-              home: HomePage(cubit: getIt(param1: HomeInitialParams()))
-              );
-          // }));
+              home: HomePage(cubit: getIt(param1: const HomeInitialParams())));
         });
   }
 }

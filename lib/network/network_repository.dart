@@ -37,6 +37,33 @@ class NetworkRepository implements Network {
     }
   }
 
+  @override
+  Future<Either<NetworkFailure, dynamic>> postFile(
+      String url, Map<String, dynamic> data, Map<String, String> file) async {
+    try {
+      final request = http.MultipartRequest('POST', Uri.parse(url));
+      data.forEach((key, value) {
+        request.fields[key] = value;
+      });
+      file.forEach((key, value) async {
+        final filePart = await http.MultipartFile.fromPath(key, value);
+        request.files.add(filePart);
+      });
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      final failure = _handleStatusCode(response.statusCode);
+
+      if (failure != null) {
+        return left(failure);
+      }
+      return right(jsonDecode(response.body));
+    } catch (ex) {
+      return left(NetworkFailure(error: ex.toString()));
+    }
+  }
+
   NetworkFailure? _handleStatusCode(int code) {
     if (code == 401) {
       return NetworkFailure(error: 'Unauthorized');

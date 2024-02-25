@@ -6,14 +6,16 @@ class ContentField extends StatelessWidget {
   bool readOnly;
   final String hintText;
   Color? hintColor;
-  final TextEditingController controller;
+  final TextInputType? inputType;
+  TextEditingController? controller;
   void Function()? ontap;
   ContentField(
       {super.key,
-      required this.controller,
+      this.controller,
       required this.hintText,
       this.readOnly = false,
       this.ontap,
+      this.inputType,
       this.hintColor});
 
   @override
@@ -25,11 +27,12 @@ class ContentField extends StatelessWidget {
         onTap: ontap,
         controller: controller,
         maxLength: 20,
+        keyboardType: inputType,
         style: TextStyle(fontSize: 18, color: Color.fromARGB(186, 0, 0, 0)),
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(
-              RegExp("[a-zA-Z0-9!#@%&*+-/=?^_`{|}~]"))
-        ],
+        // inputFormatters: <TextInputFormatter>[
+        //   FilteringTextInputFormatter.allow(
+        //       RegExp("[a-zA-Z0-9!#@%&*+-/=?^_`{|}~]"))
+        // ],
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(color: hintColor),

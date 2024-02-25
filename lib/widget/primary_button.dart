@@ -37,7 +37,7 @@ class PrimaryButton extends StatelessWidget {
           color: fillColor,
         ),
         child: loading
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                 color: Colors.white,
               ))
@@ -53,7 +53,7 @@ class PrimaryButton extends StatelessWidget {
                             color: textColor,
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   Center(
                     child: Text(
                       title,

@@ -10,7 +10,6 @@ import 'package:edugated/widget/primary_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'add_contact_cubit.dart';
 
@@ -49,9 +48,9 @@ class _AddContactState extends State<AddContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white.withOpacity(0.7),
-      child: Center(
+    return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.7),
+      body: Center(
         child: Container(
           height: 0.8.sh,
           width: 0.9.sw,
@@ -95,7 +94,10 @@ class _AddContactState extends State<AddContactPage> {
                         ContentField(
                             controller: nameController, hintText: "Name"),
                         ContentField(
-                            controller: phoneController, hintText: "Phone"),
+                          controller: phoneController,
+                          hintText: "Phone",
+                          inputType: TextInputType.number,
+                        ),
                         PrimaryDropDown(
                           labelText: 'Pass Type',
                           hintText: 'Select Contact Type',
@@ -141,13 +143,14 @@ class _AddContactState extends State<AddContactPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              // Image.asset(
-                                              //   "assets/images/Icon material-file-upload@3x.png",
-                                              //   scale: 4,
-                                              // ),
+                                              Icon(
+                                                Icons.photo_outlined,
+                                                color:
+                                                    AppColors.primaryColorDark,
+                                              ),
                                               20.horizontalSpace,
                                               Text(
-                                                "Upload Image",
+                                                "Upload Cnic Image",
                                                 style: TextStyle(
                                                   fontFamily: "Roboto, Bold",
                                                   fontSize: 16.sp,
@@ -177,8 +180,8 @@ class _AddContactState extends State<AddContactPage> {
                         ),
                       ],
                     ),
-                    // 25.verticalSpace,
                     PrimaryButton(
+                        loading: state.isLoading,
                         title: 'Add',
                         onTap: () {
                           cubit.onTapAdd(AddContact(

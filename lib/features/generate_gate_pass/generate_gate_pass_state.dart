@@ -1,29 +1,38 @@
 import 'package:edugated/domain/entities/contact.dart';
 
 class GenerateGatePassState {
-  final bool firstStep;
   final List<Contact> contacts;
   final bool isLoading;
-  final String? error;
+  final bool isgenerateLoading;
 
-  const GenerateGatePassState({
-    required this.firstStep,
-    required this.contacts,
-    required this.isLoading,
-    this.error,
-  });
+  final String? error;
+  final String? selectedDate;
+  final String? contactId;
+
+  const GenerateGatePassState(
+      {required this.contacts,
+      required this.isLoading,
+      required this.isgenerateLoading,
+      this.error,
+      this.selectedDate,
+      this.contactId});
 
   factory GenerateGatePassState.initial() => const GenerateGatePassState(
-      firstStep: true, contacts: [], isLoading: false);
+      contacts: [], isLoading: false, isgenerateLoading: false);
 
   GenerateGatePassState copyWith(
           {bool? firstStep,
           List<Contact>? contacts,
           bool? isLoading,
+          bool? isgenerateLoading,
+          String? selectedDate,
+          String? contactId,
           String? error}) =>
       GenerateGatePassState(
-          firstStep: firstStep ?? this.firstStep,
           contacts: contacts ?? this.contacts,
           isLoading: isLoading ?? this.isLoading,
+          isgenerateLoading: isgenerateLoading ?? this.isgenerateLoading,
+          selectedDate: selectedDate ?? this.selectedDate,
+          contactId: contactId ?? this.contactId,
           error: error ?? this.error);
 }
