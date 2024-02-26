@@ -1,37 +1,49 @@
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  final int id;
+  final String id;
   final String name;
-  final String username;
   final String email;
   final String phone;
-  final String website;
+  final String departmentId;
+  final String semesterId;
+  final String userType;
+  final String qrCode;
+  final String image;
 
   const User({
     required this.id,
     required this.name,
-    required this.username,
     required this.email,
     required this.phone,
-    required this.website,
+    required this.departmentId,
+    required this.semesterId,
+    required this.userType,
+    required this.qrCode,
+    required this.image,
   });
 
   const User.empty()
-      : id = 000,
-        email = '',
-        name = '',
-        username = '',
-        website = '',
-        phone = '';
+      : id = "",
+        name = "",
+        email = "",
+        phone = "",
+        departmentId = "",
+        semesterId = "",
+        userType = "",
+        qrCode = "",
+        image = "";
 
   @override
   List<Object?> get props => [
         id,
         name,
-        username,
         email,
         phone,
-        website,
+        departmentId,
+        semesterId,
+        userType,
+        qrCode,
+        image
       ];
 }

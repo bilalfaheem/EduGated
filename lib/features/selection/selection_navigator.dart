@@ -1,20 +1,28 @@
+import 'package:edugated/features/login/login_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:edugated/main.dart';
 import 'package:edugated/navigation/navigation.dart';
 import 'selection_initial_params.dart';
 import 'selection_page.dart';
 
-class SelectionNavigator {}
+class SelectionNavigator with LoginRoute {
+  SelectionNavigator(this.navigator);
+  @override
+  late BuildContext context;
 
-mixin SelectionRoute {
-openSelection(SelectionInitialParams initialParams) {
-navigator.push(
-context,
-SelectionPage(cubit: getIt(param1: initialParams)),
-);
+  @override
+  final Navigation navigator;
 }
 
-Navigation get navigator;
+mixin SelectionRoute {
+  openSelection(SelectionInitialParams initialParams) {
+    navigator.push(
+      context,
+      SelectionPage(cubit: getIt(param1: initialParams)),
+    );
+  }
 
-BuildContext get context;
+  Navigation get navigator;
+
+  BuildContext get context;
 }

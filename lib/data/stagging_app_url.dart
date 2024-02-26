@@ -14,4 +14,7 @@ class StaggingAppUrl implements AppUrl {
 
   @override
   String guestPassEndPoint = "guest_pass_history.php";
+
+  @override
+  String loginEndPoint = "login.php";
 }

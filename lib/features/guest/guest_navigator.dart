@@ -8,7 +8,7 @@ import 'package:edugated/navigation/navigation.dart';
 import 'guest_initial_params.dart';
 import 'guest_page.dart';
 
-class GuestNavigator with GenerateGatePassRoute ,GuestPassRoute{
+class GuestNavigator with GenerateGatePassRoute, GuestPassRoute {
   GuestNavigator(this.navigator);
 
   @override

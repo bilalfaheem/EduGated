@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class ActivityTile extends StatelessWidget {
   final Activity activity;
-  const ActivityTile({super.key,required this.activity});
+  const ActivityTile({super.key, required this.activity});
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
 class SelectionInitialParams {
-
-const SelectionInitialParams();
+  const SelectionInitialParams();
 }

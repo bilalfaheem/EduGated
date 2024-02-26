@@ -5,5 +5,6 @@ abstract class AppUrl {
   String contactsEndPoint = "";
   String generateGatePassEndPoint = "";
   String guestPassEndPoint = "";
+  String loginEndPoint = "";
 
 }

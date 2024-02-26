@@ -1,11 +1,9 @@
-import 'dart:html';
-
 import 'package:edugated/data/guest_json/rest_api_guest_repository.dart';
 import 'package:edugated/data/rest_api_activity_repository.dart';
 import 'package:edugated/data/rest_api_add_contact_repository.dart';
 import 'package:edugated/data/rest_api_contacts_repository.dart';
 import 'package:edugated/data/rest_api_generate_gate_pass_repository.dart';
-import 'package:edugated/data/rest_api_users_repository.dart';
+import 'package:edugated/data/rest_api_login_repository.dart';
 import 'package:edugated/data/stagging_app_url.dart';
 import 'package:edugated/domain/app_url/app_url.dart';
 import 'package:edugated/domain/repositories/activity_repository.dart';
@@ -13,11 +11,13 @@ import 'package:edugated/domain/repositories/add_contact_repository.dart';
 import 'package:edugated/domain/repositories/contacts.repository.dart';
 import 'package:edugated/domain/repositories/generate_gate_pass_repository.dart';
 import 'package:edugated/domain/repositories/guest_repository.dart';
-import 'package:edugated/domain/repositories/users_repository.dart';
+import 'package:edugated/domain/repositories/login_repository.dart';
 import 'package:edugated/domain/use_cases/add_contact_use_case.dart';
 import 'package:edugated/domain/use_cases/generate_gate_pass_use_case.dart';
+import 'package:edugated/domain/use_cases/login_use_case.dart';
 import 'package:edugated/domain/validator/add_contact_validator.dart';
 import 'package:edugated/domain/validator/generate_gate_pass_validator.dart';
+import 'package:edugated/domain/validator/login_validator.dart';
 import 'package:edugated/features/activity/activity_cubit.dart';
 import 'package:edugated/features/activity/activity_initial_params.dart';
 import 'package:edugated/features/activity/activity_navigator.dart';
@@ -38,7 +38,9 @@ import 'package:edugated/features/guest_pass/guest_pass_navigator.dart';
 import 'package:edugated/features/home/home_cubit.dart';
 import 'package:edugated/features/home/home_initial_params.dart';
 import 'package:edugated/features/home/home_navigator.dart';
-import 'package:edugated/features/home/home_page.dart';
+import 'package:edugated/features/login/login_cubit.dart';
+import 'package:edugated/features/login/login_initial_params.dart';
+import 'package:edugated/features/login/login_navigator.dart';
 import 'package:edugated/features/profile/profile_cubit.dart';
 import 'package:edugated/features/profile/profile_initial_params.dart';
 import 'package:edugated/features/profile/profile_navigator.dart';
@@ -77,7 +79,6 @@ Future<void> main() async {
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Repository >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-  getIt.registerSingleton<UsersRepository>(RestApiUsersRepository(getIt()));
   getIt.registerSingleton<ActivityRepository>(
       RestApiActivityRepository(getIt(), getIt()));
   getIt.registerSingleton<ContactsRepository>(
@@ -86,6 +87,8 @@ Future<void> main() async {
       RestApiGenerateGatePassRepository(getIt(), getIt()));
   getIt.registerSingleton<GuestRepository>(
       RestApiGuestRepository(getIt(), getIt()));
+  getIt.registerSingleton<LoginRepository>(
+      RestApiLoginRespository(getIt(), getIt()));
 
   // getIt.registerSingleton<ContactsRepository>(MockContactsRepository());
   getIt.registerSingleton<AddContactRepository>(
@@ -96,6 +99,7 @@ Future<void> main() async {
   getIt.registerSingleton<AddContactValidator>(AddContactValidator(getIt()));
   getIt.registerSingleton<GenerateGatePassValidator>(
       GenerateGatePassValidator(getIt()));
+  getIt.registerSingleton<LoginValidator>(LoginValidator(getIt()));
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Navigation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -107,7 +111,8 @@ Future<void> main() async {
       GenerateGatePassNavigator(getIt()));
   getIt.registerSingleton<GuestPassNavigator>(GuestPassNavigator());
   getIt.registerSingleton<ProfileNavigator>(ProfileNavigator());
-  getIt.registerSingleton<SelectionNavigator>(SelectionNavigator());
+  getIt.registerSingleton<SelectionNavigator>(SelectionNavigator(getIt()));
+  getIt.registerSingleton<LoginNavigator>(LoginNavigator(getIt()));
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Use Case >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -116,6 +121,10 @@ Future<void> main() async {
     getIt(),
   ));
   getIt.registerSingleton<GenerateGatePassUseCase>(GenerateGatePassUseCase(
+    getIt(),
+    getIt(),
+  ));
+  getIt.registerSingleton<LoginUseCase>(LoginUseCase(
     getIt(),
     getIt(),
   ));
@@ -144,9 +153,10 @@ Future<void> main() async {
             param,
           ));
   getIt.registerFactoryParam<SelectionCubit, SelectionInitialParams, dynamic>(
-      (param, _) => SelectionCubit(
-            param,
-          ));
+      (param, _) => SelectionCubit(param, getIt()));
+
+  getIt.registerFactoryParam<LoginCubit, LoginInitialParams, dynamic>(
+      (param, _) => LoginCubit(param, getIt(), getIt()));
   runApp(const MyApp());
 }
 

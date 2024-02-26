@@ -1,1 +1,1 @@
-enum UserType { student, resident,guard }
+enum UserType { student, resident, guard }

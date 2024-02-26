@@ -7,14 +7,14 @@ import 'profile_page.dart';
 class ProfileNavigator {}
 
 mixin ProfileRoute {
-openProfile(ProfileInitialParams initialParams) {
-navigator.push(
-context,
-ProfilePage(cubit: getIt(param1: initialParams)),
-);
-}
+  openProfile(ProfileInitialParams initialParams) {
+    navigator.push(
+      context,
+      ProfilePage(cubit: getIt(param1: initialParams)),
+    );
+  }
 
-Navigation get navigator;
+  Navigation get navigator;
 
-BuildContext get context;
+  BuildContext get context;
 }

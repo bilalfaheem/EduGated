@@ -5,7 +5,7 @@ class SelectionState {
   const SelectionState({required this.userType});
 
   factory SelectionState.initial() =>
-   const   SelectionState(userType: UserType.student);
+      const SelectionState(userType: UserType.student);
 
   SelectionState copyWith({UserType? userType}) =>
       SelectionState(userType: userType ?? this.userType);

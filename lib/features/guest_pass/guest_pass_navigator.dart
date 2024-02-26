@@ -13,7 +13,8 @@ mixin GuestPassRoute {
       GuestPassPage(cubit: getIt(param1: initialParams)),
     );
   }
-    openGuestPass(GuestPassInitialParams initialParams) {
+
+  openGuestPass(GuestPassInitialParams initialParams) {
     navigator.push(
       context,
       GuestPassPage(cubit: getIt(param1: initialParams)),

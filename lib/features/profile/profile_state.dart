@@ -1,5 +1,3 @@
-
-
 class ProfileState {
   final bool isLoading;
   final String? error;

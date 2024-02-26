@@ -15,5 +15,4 @@ class Data {
             ?.map((e) => History.fromJson(e as Map<String, dynamic>))
             .toList(),
       );
-
 }

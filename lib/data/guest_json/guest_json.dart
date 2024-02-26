@@ -16,6 +16,4 @@ class GuestJson {
             ? null
             : Data.fromJson(json['data'] as Map<String, dynamic>),
       );
-
-
 }

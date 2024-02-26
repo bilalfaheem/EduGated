@@ -48,7 +48,7 @@ class _ProfileState extends State<ProfilePage> {
             ),
           ),
           Container(
-              margin: EdgeInsets.symmetric(horizontal: 30,vertical: 20.h),
+              margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20.h),
               child: Column(
                 children: [
                   ProfileTile(text: "Name", image: AppAssets.profile),

@@ -58,6 +58,5 @@ class GenerateGatePassJsonData {
       contactName: contactName ?? "",
       contactPhone: contactPhone ?? "",
       contactEmail: contactEmail ?? "",
-      contactType: contactType ?? ""
-      );
+      contactType: contactType ?? "");
 }
