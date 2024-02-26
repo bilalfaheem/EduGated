@@ -1,7 +1,8 @@
-import 'package:edugated/features/activity/widget/activity_tile.dart';
 import 'package:edugated/features/generate_gate_pass/generate_gate_pass_initial_params.dart';
 import 'package:edugated/features/guest/domain.models/guest_pass_type.dart';
 import 'package:edugated/features/guest/guest_state.dart';
+import 'package:edugated/features/guest/widget/guest_tile.dart';
+import 'package:edugated/features/guest_pass/guest_pass_initial_params.dart';
 import 'package:edugated/resources/app_assets.dart';
 import 'package:edugated/resources/app_colors.dart';
 import 'package:edugated/resources/utils.dart';
@@ -9,7 +10,7 @@ import 'package:edugated/widget/content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
+
 import 'guest_cubit.dart';
 
 class GuestPage extends StatefulWidget {
@@ -158,7 +159,7 @@ class _GuestState extends State<GuestPage> {
                                 style: TextStyle(
                                     color: guestState.selectedTab ==
                                             GuestPassType.history
-                                        ? Colors.white
+                                        ? AppColors.white
                                         : AppColors.primaryColorDark,
                                     fontWeight: FontWeight.w600),
                               ),
@@ -169,23 +170,10 @@ class _GuestState extends State<GuestPage> {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 20),
-                      child: Text(
-                        DateFormat('dd MMM yyy').format(
-                            DateTime.parse("2023-12-06T10:52:51.000000")),
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                20.verticalSpace,
                 Container(
                   height: 0.4.sh,
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
                   decoration: BoxDecoration(
                       color: AppColors.primaryShadeLight.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20.r)),
@@ -210,7 +198,18 @@ class _GuestState extends State<GuestPage> {
                                         GuestPassType.active
                                     ? guestState.active[index]
                                     : guestState.history[index];
-                                return ActivityTile();
+                                return GestureDetector(
+                                  onTap: () => guestState.selectedTab ==
+                                          GuestPassType.active
+                                      ? cubit.onTapGuestTile(
+                                          GuestPassInitialParams(iteration))
+                                      : null,
+                                  child: GuestTile(
+                                    pass: iteration,
+                                    active: guestState.selectedTab ==
+                                        GuestPassType.active,
+                                  ),
+                                );
                               },
                               separatorBuilder: (context, index) =>
                                   15.verticalSpace,

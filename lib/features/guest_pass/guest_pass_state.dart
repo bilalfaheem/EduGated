@@ -1,11 +1,10 @@
-import 'guest_pass_initial_params.dart';
-
 class GuestPassState {
-  const GuestPassState();
+  final bool isLoading;
+  final String? error;
+  const GuestPassState({this.error, required this.isLoading});
 
-  factory GuestPassState.initial(
-          {required GuestPassInitialParams initialParams}) =>
-      GuestPassState();
+  factory GuestPassState.initial() => const GuestPassState(isLoading: false);
 
-  GuestPassState copyWith() => const GuestPassState();
+  GuestPassState copyWith({String? error, bool? isLoading}) => GuestPassState(
+      isLoading: isLoading ?? this.isLoading, error: error ?? this.error);
 }

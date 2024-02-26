@@ -91,12 +91,16 @@ class _ActivityState extends State<ActivityPage> {
                       child: Center(
                           child: Content(data: "No Activity Found", size: 20)));
                 } else {
-                  return const Column(
-                    children: [
-                      ActivityTile(),
-                      // employeeActivityTile(
-                      //     false, "name", "true", "2023-12-06T10:52:51.000000")
-                    ],
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: activityState.activities.length,
+                    itemBuilder: (context, index) {
+                      final iteration = activityState.activities[index];
+                      return ActivityTile(
+                        activity: iteration,
+                      );
+                    },
+                    separatorBuilder: (context, index) => 15.verticalSpace,
                   );
                 }
               }

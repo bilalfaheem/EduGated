@@ -1,0 +1,4 @@
+class SelectionInitialParams {
+
+const SelectionInitialParams();
+}

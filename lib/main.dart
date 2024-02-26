@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:edugated/data/guest_json/rest_api_guest_repository.dart';
 import 'package:edugated/data/rest_api_activity_repository.dart';
 import 'package:edugated/data/rest_api_add_contact_repository.dart';
@@ -37,6 +39,13 @@ import 'package:edugated/features/home/home_cubit.dart';
 import 'package:edugated/features/home/home_initial_params.dart';
 import 'package:edugated/features/home/home_navigator.dart';
 import 'package:edugated/features/home/home_page.dart';
+import 'package:edugated/features/profile/profile_cubit.dart';
+import 'package:edugated/features/profile/profile_initial_params.dart';
+import 'package:edugated/features/profile/profile_navigator.dart';
+import 'package:edugated/features/selection/selection_cubit.dart';
+import 'package:edugated/features/selection/selection_initial_params.dart';
+import 'package:edugated/features/selection/selection_navigator.dart';
+import 'package:edugated/features/selection/selection_page.dart';
 import 'package:edugated/navigation/app_navigator.dart';
 import 'package:edugated/navigation/navigation.dart';
 import 'package:edugated/network/network.dart';
@@ -44,6 +53,8 @@ import 'package:edugated/network/network_repository.dart';
 import 'package:edugated/resources/validator.dart';
 import 'package:edugated/services/date_picker_service.dart';
 import 'package:edugated/services/pick_image_service.dart';
+import 'package:edugated/services/screen_capture.dart';
+import 'package:edugated/services/share_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
@@ -61,6 +72,8 @@ Future<void> main() async {
 
   getIt.registerSingleton<PickImageService>(PickImageService());
   getIt.registerSingleton<DatePickerService>(DatePickerService());
+  getIt.registerSingleton<ScreenCapture>(ScreenCapture());
+  getIt.registerSingleton<ShareFile>(ShareFile());
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Repository >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -93,6 +106,8 @@ Future<void> main() async {
   getIt.registerSingleton<GenerateGatePassNavigator>(
       GenerateGatePassNavigator(getIt()));
   getIt.registerSingleton<GuestPassNavigator>(GuestPassNavigator());
+  getIt.registerSingleton<ProfileNavigator>(ProfileNavigator());
+  getIt.registerSingleton<SelectionNavigator>(SelectionNavigator());
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Use Case >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -123,10 +138,15 @@ Future<void> main() async {
   getIt.registerFactoryParam<AddContactCubit, AddContactInitialParams, dynamic>(
       (param, _) => AddContactCubit(param, getIt(), getIt()));
   getIt.registerFactoryParam<GuestPassCubit, GuestPassInitialParams, dynamic>(
-      (param, _) => GuestPassCubit(
+      (param, _) => GuestPassCubit(param, getIt(), getIt()));
+  getIt.registerFactoryParam<ProfileCubit, ProfileInitialParams, dynamic>(
+      (param, _) => ProfileCubit(
             param,
           ));
-
+  getIt.registerFactoryParam<SelectionCubit, SelectionInitialParams, dynamic>(
+      (param, _) => SelectionCubit(
+            param,
+          ));
   runApp(const MyApp());
 }
 
@@ -141,7 +161,10 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(fontFamily: GoogleFonts.nunito().fontFamily),
-              home: HomePage(cubit: getIt(param1: const HomeInitialParams())));
+              home: SelectionPage(
+                  cubit: getIt(param1: const SelectionInitialParams()))
+              //  HomePage(cubit: getIt(param1: const HomeInitialParams()))
+              );
         });
   }
 }

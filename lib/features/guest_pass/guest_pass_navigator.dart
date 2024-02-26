@@ -7,8 +7,14 @@ import 'guest_pass_page.dart';
 class GuestPassNavigator {}
 
 mixin GuestPassRoute {
-  openGuestPass(GuestPassInitialParams initialParams) {
+  openGuestPassPushReplacement(GuestPassInitialParams initialParams) {
     navigator.pushReplacement(
+      context,
+      GuestPassPage(cubit: getIt(param1: initialParams)),
+    );
+  }
+    openGuestPass(GuestPassInitialParams initialParams) {
+    navigator.push(
       context,
       GuestPassPage(cubit: getIt(param1: initialParams)),
     );

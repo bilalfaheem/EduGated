@@ -3,6 +3,8 @@ import 'package:edugated/features/activity/activity_page.dart';
 import 'package:edugated/features/guest/guest_initial_params.dart';
 import 'package:edugated/features/guest/guest_page.dart';
 import 'package:edugated/features/home/home_state.dart';
+import 'package:edugated/features/profile/profile_initial_params.dart';
+import 'package:edugated/features/profile/profile_page.dart';
 import 'package:edugated/main.dart';
 import 'package:edugated/resources/app_assets.dart';
 import 'package:edugated/resources/app_colors.dart';
@@ -28,7 +30,7 @@ class _HomeState extends State<HomePage> {
   final List<Widget> _pages = [
     ActivityPage(cubit: getIt(param1: const ActivityInitialParams())),
     GuestPage(cubit: getIt(param1: const GuestInitialParams())),
-    ActivityPage(cubit: getIt(param1: const ActivityInitialParams()))
+    ProfilePage(cubit: getIt(param1: const ProfileInitialParams()))
   ];
 
   @override
@@ -39,7 +41,6 @@ class _HomeState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
         body: BlocBuilder(
             bloc: cubit,
             builder: (context, state) {

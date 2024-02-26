@@ -8,18 +8,19 @@ class Pass {
   final String contactName;
   final String contactPhone;
   final String contactEmail;
+  final String contactType;
 
-  Pass({
-    required this.id,
-    required this.passDate,
-    required this.userId,
-    required this.contactId,
-    required this.qrCode,
-    required this.userName,
-    required this.contactName,
-    required this.contactPhone,
-    required this.contactEmail,
-  });
+  Pass(
+      {required this.id,
+      required this.passDate,
+      required this.userId,
+      required this.contactId,
+      required this.qrCode,
+      required this.userName,
+      required this.contactName,
+      required this.contactPhone,
+      required this.contactEmail,
+      required this.contactType});
 
   const Pass.empty()
       : id = "",
@@ -30,7 +31,8 @@ class Pass {
         userName = "",
         contactName = "",
         contactPhone = "",
-        contactEmail = "";
+        contactEmail = "",
+        contactType = "";
   @override
   List<Object?> get props => [
         id,
@@ -42,5 +44,6 @@ class Pass {
         contactName,
         contactPhone,
         contactEmail,
+        contactType
       ];
 }

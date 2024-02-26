@@ -1,9 +1,12 @@
+import 'package:edugated/domain/entities/activity.dart';
+import 'package:edugated/domain/entities/pass.dart';
 import 'package:edugated/resources/app_assets.dart';
 import 'package:edugated/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ActivityTile extends StatelessWidget {
-  const ActivityTile({super.key});
+  final Activity activity;
+  const ActivityTile({super.key,required this.activity});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class ActivityTile extends StatelessWidget {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle, color: AppColors.primaryColorLight),
                 child: Image.asset(
-                    false ? AppAssets.checkin : AppAssets.checkout,
+                    true ? AppAssets.checkin : AppAssets.checkout,
                     height: 40,
                     color: AppColors.orange),
               ),
@@ -33,7 +36,7 @@ class ActivityTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "name",
+                    activity.contactName,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                   ),
                   Text(

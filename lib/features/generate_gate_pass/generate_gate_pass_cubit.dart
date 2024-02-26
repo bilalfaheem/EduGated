@@ -64,5 +64,5 @@ class GenerateGatePassCubit extends Cubit<GenerateGatePassState> {
   onTapAddContact(AddContactInitialParams initialParams) =>
       navigator.openAddContact(initialParams);
   onGuestPassPage(Pass pass) =>
-      navigator.openGuestPass(GuestPassInitialParams(pass));
+      navigator.openGuestPassPushReplacement(GuestPassInitialParams(pass));
 }

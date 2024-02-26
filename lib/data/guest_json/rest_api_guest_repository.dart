@@ -20,8 +20,16 @@ class RestApiGuestRepository implements GuestRepository {
                 final active = response["data"]["active"] as List;
                 final history = response["data"]["history"] as List;
                 return right((
-                  active.map((e) => Active.fromJson(e).toDomain()).toList(),
-                  history.map((e) => History.fromJson(e).toDomain()).toList(),
+                  active
+                      .map((e) => Active.fromJson(e).toDomain())
+                      .toList()
+                      .reversed
+                      .toList(),
+                  history
+                      .map((e) => History.fromJson(e).toDomain())
+                      .toList()
+                      .reversed
+                      .toList(),
                 ));
               }));
 }

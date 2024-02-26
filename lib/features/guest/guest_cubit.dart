@@ -2,6 +2,7 @@ import 'package:edugated/domain/repositories/guest_repository.dart';
 import 'package:edugated/features/generate_gate_pass/generate_gate_pass_initial_params.dart';
 import 'package:edugated/features/guest/domain.models/guest_pass_type.dart';
 import 'package:edugated/features/guest/guest_navigator.dart';
+import 'package:edugated/features/guest_pass/guest_pass_initial_params.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'guest_initial_params.dart';
 import 'guest_state.dart';
@@ -18,6 +19,8 @@ class GuestCubit extends Cubit<GuestState> {
 
   onTapCreateGuestPass(GenerateGatePassInitialParams initialParams) =>
       navigator.openGenerateGatePass(initialParams);
+  onTapGuestTile(GuestPassInitialParams initialParams) =>
+      navigator.openGuestPass(initialParams);
 
   Future<void> fetchGuestPass() async {
     emit(state.copyWith(isLoading: true, error: null));
