@@ -26,7 +26,7 @@ class ContentField extends StatelessWidget {
         readOnly: readOnly,
         onTap: ontap,
         controller: controller,
-        maxLength: 20,
+        maxLength: 50,
         keyboardType: inputType,
         style: TextStyle(fontSize: 18, color: Color.fromARGB(186, 0, 0, 0)),
         // inputFormatters: <TextInputFormatter>[

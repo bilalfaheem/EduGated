@@ -39,6 +39,7 @@ class _LoginState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         // automaticallyImplyLeading: false,
         centerTitle: true,
@@ -53,49 +54,64 @@ class _LoginState extends State<LoginPage> {
             bloc: cubit,
             builder: (context, state) {
               final loginState = state as LoginState;
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
+              return SizedBox(
+                height: 0.8.sh,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                          child: Image.asset(
-                        AppAssets.logo,
-                        height: 230.h,
-                      )),
-                      Content(
-                        data: loginState.initialParams.userType ==
-                                UserType.student
-                            ? "Student"
-                            : loginState.initialParams.userType ==
-                                    UserType.resident
-                                ? "Resident"
-                                : "Guard",
-                        size: 30.h,
-                        weight: FontWeight.bold,
-                        color: AppColors.primaryColorDark,
+                      Column(
+                        children: [
+                          Container(
+                              child: Image.asset(
+                            AppAssets.logo,
+                            height: 230.h,
+                          )),
+                          Content(
+                            data: loginState.initialParams.userType ==
+                                    UserType.student
+                                ? "Student"
+                                : loginState.initialParams.userType ==
+                                        UserType.resident
+                                    ? "Resident"
+                                    : "Guard",
+                            size: 30.h,
+                            weight: FontWeight.bold,
+                            color: AppColors.primaryColorDark,
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.w),
+                        child: Column(
+                          children: [
+                            ContentField(
+                              hintText: "Email",
+                              controller: cubit.emailController,
+                            ),
+                            ContentField(
+                              hintText: "Password",
+                              controller: cubit.passwordController,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 100.h, horizontal: 30.w),
+                            child: PrimaryButton(
+                                loading: loginState.isLoading,
+                                title: "Login",
+                                onTap: () => cubit.onTapLogin(Login(
+                                    cubit.emailController.text,
+                                    cubit.passwordController.text,
+                                    loginState.initialParams.userType)))),
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.w),
-                    child: Column(
-                      children: [
-                        ContentField(hintText: "Email"),
-                        ContentField(hintText: "Password"),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30.w),
-                      child: PrimaryButton(
-                          loading: loginState.isLoading,
-                          title: "Login",
-                          onTap: () => cubit.onTapLogin(Login(
-                              cubit.emailController.text,
-                              cubit.passwordController.text,
-                              loginState.initialParams.userType)))),
-                ],
+                ),
               );
             }),
       ),
