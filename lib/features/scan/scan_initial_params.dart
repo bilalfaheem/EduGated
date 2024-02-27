@@ -1,0 +1,4 @@
+class ScanInitialParams {
+
+const ScanInitialParams();
+}
