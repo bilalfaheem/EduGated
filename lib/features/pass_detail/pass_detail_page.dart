@@ -45,6 +45,7 @@ class _PassDetailState extends State<PassDetailPage> {
             builder: (context, state) {
               final passDetailState = state as PassDetailState;
               return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   passDetailState.initialParams.valid
                       ? Container(
@@ -69,11 +70,18 @@ class _PassDetailState extends State<PassDetailPage> {
                                   title: "Name",
                                   value:
                                       cubit.initialParams.passDetail!.userName),
-                              GuestPassTile(
-                                  title: "Guest Name",
-                                  value: cubit
-                                      .initialParams.passDetail!.contactName
-                                      .toString()),
+                              cubit.initialParams.passDetail?.contactName ==
+                                      null
+                                  ? SizedBox()
+                                  : cubit.initialParams.passDetail
+                                              ?.contactName ==
+                                          ""
+                                      ? SizedBox()
+                                      : GuestPassTile(
+                                          title: "Guest Name",
+                                          value: cubit.initialParams.passDetail!
+                                              .contactName
+                                              .toString()),
                               GuestPassTile(
                                   title: "Date",
                                   value: cubit
@@ -82,11 +90,21 @@ class _PassDetailState extends State<PassDetailPage> {
                             ],
                           ),
                         )
-                      : Content(
-                          data: passDetailState.initialParams.error.toString(),
-                          size: 30.h,
-                          weight: FontWeight.bold,
-                          color: AppColors.red,
+                      : Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Content(
+                                data: passDetailState.initialParams.error
+                                    .toString(),
+                                size: 30.h,
+                                weight: FontWeight.bold,
+                                color: AppColors.red,
+                              ),
+                            ),
+                          ],
                         )
                 ],
               );
