@@ -36,11 +36,15 @@ class ActivityTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    activity.contactName,
+                    activity.contactName == ""
+                        ? activity.userName
+                        : activity.contactName == "null"
+                            ? activity.userName
+                            : activity.contactName,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                   ),
                   Text(
-                    "status",
+                    activity.scanAt.toFormatDateTime(format: "dd/MMM/yy"),
                     style: TextStyle(fontSize: 16),
                   ),
                 ],
@@ -51,7 +55,7 @@ class ActivityTile extends StatelessWidget {
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "12/02/24#",
+                "",
                 // "DateFormat('hh:mm a').format(DateTime.parse(date))",
                 style: TextStyle(fontSize: 15),
               ),
