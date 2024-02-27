@@ -1,4 +1,4 @@
-import 'package:edugated/domain/entities/response_body.dart';
+import 'package:edugated/domain/entities/pass_detail.dart';
 import 'package:edugated/domain/failures/scan_failure.dart';
 import 'package:edugated/domain/repositories/scan_repository.dart';
 import 'package:edugated/services/scan_service.dart';
@@ -11,7 +11,7 @@ class ScanUseCase {
 
   ScanUseCase(this._repo, this._service);
 
-  Future<Either<ScanFailure, ResponseBody>> execute(
+  Future<Either<ScanFailure, PassDetail>> execute(
           BarcodeCapture capture) async =>
       await _service.execute(capture).then((value) => value.fold(
           (err) => left(ScanFailure(error: err.error)),

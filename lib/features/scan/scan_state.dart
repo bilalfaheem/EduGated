@@ -1,5 +1,3 @@
-
-
 class ScanState {
   final bool isLoading;
   final String? error;

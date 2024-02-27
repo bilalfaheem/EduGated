@@ -6,5 +6,4 @@ abstract class AppUrl {
   String generateGatePassEndPoint = "";
   String guestPassEndPoint = "";
   String loginEndPoint = "";
-
 }

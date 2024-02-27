@@ -32,7 +32,13 @@ class _PassDetailState extends State<PassDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Content(
+            data: "Pass Detail",
+            size: 24.h,
+            weight: FontWeight.w600,
+          ),
+        ),
         body: BlocBuilder(
             bloc: cubit,
             builder: (context, state) {
@@ -55,22 +61,22 @@ class _PassDetailState extends State<PassDetailPage> {
                                   decoration: BoxDecoration(
                                       color: AppColors.white,
                                       borderRadius: BorderRadius.circular(30)),
-                                  child: SizedBox()
-                                  // Image.network(
-                                  //   cubit.initialParams.pass.userName
-                                  // )
-                                  ),
+                                  child: Image.network(cubit.initialParams
+                                          .passDetail?.userImage ??
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_we7r5CWAZRO7KN7WjBPMnjp4hDlLIrVGYad4FRuh2g&s")),
                               GuestPassTile(
                                   title: "Name",
-                                  value: cubit.initialParams.pass!.contactName
+                                  value:
+                                      cubit.initialParams.passDetail!.userName),
+                              GuestPassTile(
+                                  title: "Guest Name",
+                                  value: cubit
+                                      .initialParams.passDetail!.contactName
                                       .toString()),
                               GuestPassTile(
-                                  title: "Phone",
-                                  value:
-                                      cubit.initialParams.pass!.contactPhone),
-                              GuestPassTile(
                                   title: "Date",
-                                  value: cubit.initialParams.pass!.passDate
+                                  value: cubit
+                                      .initialParams.passDetail!.passDate
                                       .toFormatDateTime(format: "dd/MMM/yy")),
                             ],
                           ),

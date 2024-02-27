@@ -15,7 +15,8 @@ class InsecureLocalStorageRepository implements LocalStorageRepository {
   }
 
   @override
-  Future<Either<LocalStorageFailure, bool>> setString(String key, String value) async {
+  Future<Either<LocalStorageFailure, bool>> setString(
+      String key, String value) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(key, value);
@@ -36,7 +37,8 @@ class InsecureLocalStorageRepository implements LocalStorageRepository {
   }
 
   @override
-  Future<Either<LocalStorageFailure, bool>> setBool(String key, bool value) async {
+  Future<Either<LocalStorageFailure, bool>> setBool(
+      String key, bool value) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool(key, value);

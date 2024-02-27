@@ -7,14 +7,14 @@ import 'pass_detail_page.dart';
 class PassDetailNavigator {}
 
 mixin PassDetailRoute {
-openPassDetail(PassDetailInitialParams initialParams) {
-navigator.pushReplacement(
-context,
-PassDetailPage(cubit: getIt(param1: initialParams)),
-);
-}
+  openPassDetail(PassDetailInitialParams initialParams) {
+    navigator.pushReplacement(
+      context,
+      PassDetailPage(cubit: getIt(param1: initialParams)),
+    );
+  }
 
-Navigation get navigator;
+  Navigation get navigator;
 
-BuildContext get context;
+  BuildContext get context;
 }

@@ -16,6 +16,4 @@ class LoginJson {
             ? null
             : LoginJsonData.fromJson(json['data'] as Map<String, dynamic>),
       );
-
-  
 }

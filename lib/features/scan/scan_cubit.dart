@@ -1,4 +1,5 @@
 import 'package:edugated/domain/use_cases/scan_use_case.dart';
+import 'package:edugated/features/pass_detail/pass_detail_initial_params.dart';
 import 'package:edugated/features/scan/scan_navigator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -17,8 +18,14 @@ class ScanCubit extends Cubit<ScanState> {
 
   onQrDetection(BarcodeCapture capture) {
     emit(state.copyWith(isLoading: true));
-    _useCase.execute(capture).then((value) => value.fold(
-        (l) => emit(state.copyWith(error: l.error, isLoading: false)),
-        (r) => emit(state.copyWith(isLoading: false))));
+    _useCase.execute(capture).then((value) => value.fold((l) {
+          emit(state.copyWith(error: l.error, isLoading: false));
+          navigator.openPassDetail(
+              PassDetailInitialParams(valid: false, error: l.error));
+        }, (r) {
+          emit(state.copyWith(isLoading: false));
+          navigator.openPassDetail(
+              PassDetailInitialParams(valid: true, passDetail: r));
+        }));
   }
 }

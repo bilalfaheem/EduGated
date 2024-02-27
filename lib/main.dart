@@ -175,7 +175,6 @@ Future<void> main() async {
   getIt.registerFactoryParam<ScanCubit, ScanInitialParams, dynamic>(
       (param, _) => ScanCubit(param, getIt(), getIt()));
 
-
   runApp(const MyApp());
 }
 
