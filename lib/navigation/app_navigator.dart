@@ -19,4 +19,10 @@ class AppNavigator implements Navigation {
       ),
     );
   }
+
+  @override
+  pushRemoveUntil(BuildContext context, Widget page) {
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => page), (route) => false);
+  }
 }

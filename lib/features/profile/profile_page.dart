@@ -1,8 +1,10 @@
+import 'package:edugated/features/profile/profile_state.dart';
 import 'package:edugated/features/profile/widget/profile_tile.dart';
 import 'package:edugated/resources/app_assets.dart';
 import 'package:edugated/widget/content.dart';
 import 'package:edugated/widget/primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'profile_cubit.dart';
@@ -24,6 +26,8 @@ class _ProfileState extends State<ProfilePage> {
 
   @override
   void initState() {
+    cubit.navigator.context = context;
+    cubit.onInit();
     super.initState();
   }
 
@@ -38,28 +42,38 @@ class _ProfileState extends State<ProfilePage> {
           weight: FontWeight.w600,
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 30.h),
-            child: Image.asset(
-              AppAssets.logo,
-              height: 170.h,
-            ),
-          ),
-          Container(
-              margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20.h),
-              child: Column(
-                children: [
-                  ProfileTile(text: "Name", image: AppAssets.profile),
-                  ProfileTile(text: "email", image: AppAssets.office),
-                  ProfileTile(text: "email", image: AppAssets.email),
-                  ProfileTile(text: "email", image: AppAssets.phone)
-                ],
-              )),
-          PrimaryButton(width: 200.w, title: "LogOut", onTap: () {})
-        ],
-      ),
+      body: BlocBuilder(
+          bloc: cubit,
+          builder: (context, state) {
+            final profileState = state as ProfileState;
+            return Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 30.h),
+                  child: Image.asset(
+                    AppAssets.logo,
+                    height: 170.h,
+                  ),
+                ),
+                Container(
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 30, vertical: 20.h),
+                    child: Column(
+                      children: [
+                        ProfileTile(
+                            text: profileState.user.name,
+                            image: AppAssets.profile),
+                        ProfileTile(
+                            text: profileState.user.email,
+                            image: AppAssets.office),
+                        ProfileTile(text: "email", image: AppAssets.email),
+                        ProfileTile(text: "email", image: AppAssets.phone)
+                      ],
+                    )),
+                PrimaryButton(width: 200.w, title: "LogOut", onTap: () {})
+              ],
+            );
+          }),
     );
   }
 }

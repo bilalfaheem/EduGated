@@ -38,8 +38,10 @@ class _ScanState extends State<ScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title:
-              Content(data: "Scan Pass", size: 24.h, weight: FontWeight.w600),
+              Content(data: "Scan Pass", size: 24.h, weight: FontWeight.w600,
+              ),
         ),
         body: BlocBuilder(
             bloc: cubit,

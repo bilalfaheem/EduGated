@@ -8,7 +8,7 @@ class HomeNavigator {}
 
 mixin HomeRoute {
   openHome(HomeInitialParams initialParams) {
-    navigator.push(
+    navigator.pushReplacement(
       context,
       HomePage(cubit: getIt(param1: initialParams)),
     );

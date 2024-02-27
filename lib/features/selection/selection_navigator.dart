@@ -22,6 +22,13 @@ mixin SelectionRoute {
     );
   }
 
+  backToSelection(SelectionInitialParams initialParams) {
+    navigator.pushRemoveUntil(
+      context,
+      SelectionPage(cubit: getIt(param1: initialParams)),
+    );
+  }
+
   Navigation get navigator;
 
   BuildContext get context;

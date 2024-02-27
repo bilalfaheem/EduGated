@@ -5,6 +5,7 @@ import 'package:edugated/data/rest_api_add_contact_repository.dart';
 import 'package:edugated/data/rest_api_contacts_repository.dart';
 import 'package:edugated/data/rest_api_generate_gate_pass_repository.dart';
 import 'package:edugated/data/rest_api_login_repository.dart';
+import 'package:edugated/data/rest_api_scan_respository.dart';
 import 'package:edugated/data/stagging_app_url.dart';
 import 'package:edugated/domain/app_url/app_url.dart';
 import 'package:edugated/domain/repositories/activity_repository.dart';
@@ -14,6 +15,7 @@ import 'package:edugated/domain/repositories/generate_gate_pass_repository.dart'
 import 'package:edugated/domain/repositories/guest_repository.dart';
 import 'package:edugated/domain/repositories/local_storage_repository.dart';
 import 'package:edugated/domain/repositories/login_repository.dart';
+import 'package:edugated/domain/repositories/scan_repository.dart';
 import 'package:edugated/domain/stores/user_store.dart';
 import 'package:edugated/domain/use_cases/add_contact_use_case.dart';
 import 'package:edugated/domain/use_cases/generate_gate_pass_use_case.dart';
@@ -103,7 +105,8 @@ Future<void> main() async {
       RestApiGuestRepository(getIt(), getIt()));
   getIt.registerSingleton<LoginRepository>(
       RestApiLoginRespository(getIt(), getIt()));
-  // getIt.registerSingleton<ScanRepository>(ScanRepository(getIt(), getIt()));
+  getIt.registerSingleton<ScanRepository>(
+      RestApiScanRepository(getIt(), getIt()));
 
   // getIt.registerSingleton<ContactsRepository>(MockContactsRepository());
   getIt.registerSingleton<AddContactRepository>(
@@ -125,7 +128,7 @@ Future<void> main() async {
   getIt.registerSingleton<GenerateGatePassNavigator>(
       GenerateGatePassNavigator(getIt()));
   getIt.registerSingleton<GuestPassNavigator>(GuestPassNavigator());
-  getIt.registerSingleton<ProfileNavigator>(ProfileNavigator());
+  getIt.registerSingleton<ProfileNavigator>(ProfileNavigator(getIt()));
   getIt.registerSingleton<SelectionNavigator>(SelectionNavigator(getIt()));
   getIt.registerSingleton<LoginNavigator>(LoginNavigator(getIt()));
   getIt.registerSingleton<ScanNavigator>(ScanNavigator(getIt()));
@@ -147,9 +150,10 @@ Future<void> main() async {
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Cubit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   getIt.registerFactoryParam<ActivityCubit, ActivityInitialParams, dynamic>(
-      (params, _) => ActivityCubit(params, getIt(), getIt())..fetchActivity());
+      (params, _) =>
+          ActivityCubit(params, getIt(), getIt(), getIt())..fetchActivity());
   getIt.registerFactoryParam<HomeCubit, HomeInitialParams, dynamic>(
-      (params, _) => HomeCubit(params, getIt()));
+      (params, _) => HomeCubit(params, getIt(), getIt()));
   getIt.registerFactoryParam<GuestCubit, GuestInitialParams, dynamic>(
       (params, _) => GuestCubit(params, getIt(), getIt())..fetchGuestPass());
   getIt.registerFactoryParam<GatePassCubit, GatePassInitialParams, dynamic>(
@@ -164,9 +168,7 @@ Future<void> main() async {
   getIt.registerFactoryParam<GuestPassCubit, GuestPassInitialParams, dynamic>(
       (param, _) => GuestPassCubit(param, getIt(), getIt()));
   getIt.registerFactoryParam<ProfileCubit, ProfileInitialParams, dynamic>(
-      (param, _) => ProfileCubit(
-            param,
-          ));
+      (param, _) => ProfileCubit(param, getIt(),getIt()));
   getIt.registerFactoryParam<SelectionCubit, SelectionInitialParams, dynamic>(
       (param, _) => SelectionCubit(param, getIt()));
 
@@ -191,7 +193,7 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(fontFamily: GoogleFonts.nunito().fontFamily),
               home: SelectionPage(
                   cubit: getIt(param1: const SelectionInitialParams()))
-              //  HomePage(cubit: getIt(param1: const HomeInitialParams()))
+              // HomePage(cubit: getIt(param1: const HomeInitialParams()))
               );
         });
   }

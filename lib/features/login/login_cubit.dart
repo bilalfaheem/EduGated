@@ -1,5 +1,6 @@
 import 'package:edugated/domain/entities/login.dart';
 import 'package:edugated/domain/use_cases/login_use_case.dart';
+import 'package:edugated/features/home/home_initial_params.dart';
 import 'package:edugated/features/login/login_navigator.dart';
 import 'package:edugated/resources/utils.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class LoginCubit extends Cubit<LoginState> {
         }, (r) {
           emit(state.copyWith(isLoading: false));
           Utils.toastMessage("Login Successfull", context);
-          // Navigator.pop(context);
+          navigator.openHome(const HomeInitialParams());
         }));
   }
 }

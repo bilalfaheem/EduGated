@@ -14,7 +14,7 @@ class RestApiLoginRespository implements LoginRepository {
 
   @override
   Future<Either<LoginFailure, User>> login(Map<String, String> data) => _network
-      .post(_appUrl.baseUrl + _appUrl.loginEndPoint, data)
+      .postFile(_appUrl.baseUrl + _appUrl.loginEndPoint, data,{})
       .then((value) =>
           value.fold((l) => left(LoginFailure(error: l.error)), (response) {
             if (response["status"] == false) {
