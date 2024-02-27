@@ -49,17 +49,15 @@ class _ProfileState extends State<ProfilePage> {
             final profileState = state as ProfileState;
             return Column(
               children: [
-                 Container(
-                                  width: 200.h,
-                                  height: 200.h,
-                                  padding: const EdgeInsets.all(30),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.white,
-                                      borderRadius: BorderRadius.circular(30)),
-                                  child: Image.network(
-                                          profileState.user.image??
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_we7r5CWAZRO7KN7WjBPMnjp4hDlLIrVGYad4FRuh2g&s")),
-                
+                Container(
+                    width: 200.h,
+                    height: 200.h,
+                    padding: const EdgeInsets.all(30),
+                    decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Image.network(profileState.user.image ??
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_we7r5CWAZRO7KN7WjBPMnjp4hDlLIrVGYad4FRuh2g&s")),
                 Container(
                     margin:
                         EdgeInsets.symmetric(horizontal: 30, vertical: 20.h),

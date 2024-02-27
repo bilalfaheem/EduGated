@@ -29,6 +29,9 @@ import 'package:edugated/features/activity/activity_initial_params.dart';
 import 'package:edugated/features/activity/activity_navigator.dart';
 import 'package:edugated/features/add_contact/add_contact_cubit.dart';
 import 'package:edugated/features/add_contact/add_contact_initial_params.dart';
+import 'package:edugated/features/contact/contact_cubit.dart';
+import 'package:edugated/features/contact/contact_initial_params.dart';
+import 'package:edugated/features/contact/contact_navigator.dart';
 import 'package:edugated/features/gate_pass/gate_pass_cubit.dart';
 import 'package:edugated/features/gate_pass/gate_pass_initial_params.dart';
 import 'package:edugated/features/gate_pass/gate_pass_navigator.dart';
@@ -137,6 +140,8 @@ Future<void> main() async {
   getIt.registerSingleton<ScanNavigator>(ScanNavigator(getIt()));
   getIt.registerSingleton<PassDetailNavigator>(PassDetailNavigator());
 
+  getIt.registerSingleton<ContactNavigator>(ContactNavigator());
+
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Use Case >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   getIt.registerSingleton<AddContactUseCase>(AddContactUseCase(
@@ -182,6 +187,8 @@ Future<void> main() async {
       (param, _) => ScanCubit(param, getIt(), getIt()));
   getIt.registerFactoryParam<PassDetailCubit, PassDetailInitialParams, dynamic>(
       (param, _) => PassDetailCubit(param));
+  getIt.registerFactoryParam<ContactCubit, ContactInitialParams, dynamic>(
+      (param, _) => ContactCubit(param));
 
   runApp(const MyApp());
 }

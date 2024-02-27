@@ -1,9 +1,11 @@
+import 'package:edugated/domain/entities/contact.dart';
 import 'package:edugated/domain/entities/generate_gate_pass.dart';
 import 'package:edugated/domain/entities/pass.dart';
 import 'package:edugated/domain/repositories/contacts.repository.dart';
 import 'package:edugated/domain/use_cases/generate_gate_pass_use_case.dart';
 import 'package:edugated/domain/use_cases/login_use_case.dart';
 import 'package:edugated/features/add_contact/add_contact_initial_params.dart';
+import 'package:edugated/features/contact/contact_initial_params.dart';
 import 'package:edugated/features/generate_gate_pass/generate_gate_pass_navigator.dart';
 import 'package:edugated/features/guest_pass/guest_pass_initial_params.dart';
 import 'package:edugated/resources/utils.dart';
@@ -66,4 +68,7 @@ class GenerateGatePassCubit extends Cubit<GenerateGatePassState> {
       navigator.openAddContact(initialParams);
   onGuestPassPage(Pass pass) =>
       navigator.openGuestPassPushReplacement(GuestPassInitialParams(pass));
+
+  onLongPressContact(ContactInitialParams initialParams) =>
+  navigator.openContact(initialParams);
 }
