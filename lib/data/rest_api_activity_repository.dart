@@ -12,7 +12,7 @@ class RestApiActivityRepository implements ActivityRepository {
   RestApiActivityRepository(this._network, this._appUrl);
   @override
   Future<Either<ActivityFailure, List<Activity>>> getActivities(data) =>
-      _network.post(_appUrl.baseUrl + _appUrl.activityEndPoint, data).then(
+      _network.postFile(_appUrl.baseUrl + _appUrl.activityEndPoint, data,{}).then(
           (value) =>
               value.fold((l) => left(ActivityFailure(error: l.error)), (r) {
                 var list = r["data"] as List;

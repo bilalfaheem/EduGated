@@ -47,8 +47,14 @@ class _GuestState extends State<GuestPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Icon(Icons.replay_outlined,
+                          color: Colors.transparent),
+                    ),
                     Column(
                       children: [
                         GestureDetector(
@@ -70,7 +76,8 @@ class _GuestState extends State<GuestPage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            // Navigator.push(context, MaterialPageRoute(builder: (context) => GenerateGatePassScreen()));
+                            cubit.onTapCreateGuestPass(
+                                const GenerateGatePassInitialParams());
                           },
                           child: Container(
                               // width: 240,
@@ -99,6 +106,15 @@ class _GuestState extends State<GuestPage> {
                         ),
                       ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: GestureDetector(
+                          onTap: () => cubit.fetchGuestPass(),
+                          child: Icon(
+                            Icons.replay_outlined,
+                            color: AppColors.primaryColorDark,
+                          )),
+                    )
                   ],
                 ),
                 Column(

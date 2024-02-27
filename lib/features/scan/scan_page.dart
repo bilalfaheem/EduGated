@@ -33,6 +33,11 @@ class _ScanState extends State<ScanPage> {
     );
     super.initState();
   }
+  @override
+  void dispose() {
+    cubit.scanController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

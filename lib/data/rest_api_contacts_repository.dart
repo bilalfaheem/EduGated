@@ -13,7 +13,7 @@ class RestApiContactsRepository implements ContactsRepository {
   @override
   Future<Either<ContactsFailure, List<Contact>>> getContacts(
           Map<String, String> data) =>
-      _network.post(_appUrl.baseUrl + _appUrl.contactsEndPoint, data).then(
+      _network.postFile(_appUrl.baseUrl + _appUrl.contactsEndPoint, data,{}).then(
           (value) =>
               value.fold((l) => left(ContactsFailure(error: l.error)), (r) {
                 var list = r["data"] as List;

@@ -1,5 +1,6 @@
 import 'package:edugated/domain/entities/add_contact.dart';
 import 'package:edugated/domain/use_cases/add_contact_use_case.dart';
+import 'package:edugated/features/generate_gate_pass/generate_gate_pass_cubit.dart';
 import 'package:edugated/resources/utils.dart';
 import 'package:edugated/services/pick_image_service.dart';
 import 'package:flutter/widgets.dart';
@@ -11,9 +12,12 @@ class AddContactCubit extends Cubit<AddContactState> {
   final AddContactInitialParams initialParams;
   final PickImageService pickImageService;
   final AddContactUseCase _addContactUseCase;
+  // final GenerateGatePassCubit _generateGatePassCubit;
 
-  AddContactCubit(
-      this.initialParams, this.pickImageService, this._addContactUseCase)
+  AddContactCubit(this.initialParams, this.pickImageService,
+      this._addContactUseCase
+      // , this._generateGatePassCubit
+      )
       : super(AddContactState.initial());
 
   late BuildContext context;
@@ -31,6 +35,7 @@ class AddContactCubit extends Cubit<AddContactState> {
         }, (r) {
           emit(state.copyWith(isLoading: false));
           Utils.toastMessage(r.message.toString(), context);
+          // _generateGatePassCubit.fetchContacts();
           Navigator.pop(context);
         }));
   }

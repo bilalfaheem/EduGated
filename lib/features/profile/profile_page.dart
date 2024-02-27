@@ -1,6 +1,7 @@
 import 'package:edugated/features/profile/profile_state.dart';
 import 'package:edugated/features/profile/widget/profile_tile.dart';
 import 'package:edugated/resources/app_assets.dart';
+import 'package:edugated/resources/app_colors.dart';
 import 'package:edugated/widget/content.dart';
 import 'package:edugated/widget/primary_button.dart';
 import 'package:flutter/material.dart';
@@ -48,13 +49,17 @@ class _ProfileState extends State<ProfilePage> {
             final profileState = state as ProfileState;
             return Column(
               children: [
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 30.h),
-                  child: Image.asset(
-                    AppAssets.logo,
-                    height: 170.h,
-                  ),
-                ),
+                 Container(
+                                  width: 200.h,
+                                  height: 200.h,
+                                  padding: const EdgeInsets.all(30),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.white,
+                                      borderRadius: BorderRadius.circular(30)),
+                                  child: Image.network(
+                                          profileState.user.image??
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_we7r5CWAZRO7KN7WjBPMnjp4hDlLIrVGYad4FRuh2g&s")),
+                
                 Container(
                     margin:
                         EdgeInsets.symmetric(horizontal: 30, vertical: 20.h),
@@ -65,12 +70,16 @@ class _ProfileState extends State<ProfilePage> {
                             image: AppAssets.profile),
                         ProfileTile(
                             text: profileState.user.email,
-                            image: AppAssets.office),
-                        ProfileTile(text: "email", image: AppAssets.email),
-                        ProfileTile(text: "email", image: AppAssets.phone)
+                            image: AppAssets.email),
+                        ProfileTile(
+                            text: profileState.user.userType,
+                            image: AppAssets.office)
                       ],
                     )),
-                PrimaryButton(width: 200.w, title: "LogOut", onTap: () {})
+                PrimaryButton(
+                    width: 200.w,
+                    title: "LogOut",
+                    onTap: () => cubit.onTapLogOut())
               ],
             );
           }),

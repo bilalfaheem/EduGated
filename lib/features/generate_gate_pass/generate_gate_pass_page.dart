@@ -1,4 +1,5 @@
 import 'package:edugated/domain/entities/generate_gate_pass.dart';
+import 'package:edugated/domain/use_cases/login_use_case.dart';
 import 'package:edugated/features/add_contact/add_contact_initial_params.dart';
 import 'package:edugated/resources/app_assets.dart';
 import 'package:edugated/resources/app_colors.dart';
@@ -193,7 +194,7 @@ class _GenerateGatePassState extends State<GenerateGatePassPage> {
                                   title: 'Generate',
                                   onTap: () async => cubit.onTapGenerate(
                                       GenerateGatePass(
-                                          "2",
+                                          user_idd??"0",
                                           generateGatePassState.contactId ?? "",
                                           cubit.dateController.text))),
                             ],

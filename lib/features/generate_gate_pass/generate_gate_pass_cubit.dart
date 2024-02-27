@@ -2,6 +2,7 @@ import 'package:edugated/domain/entities/generate_gate_pass.dart';
 import 'package:edugated/domain/entities/pass.dart';
 import 'package:edugated/domain/repositories/contacts.repository.dart';
 import 'package:edugated/domain/use_cases/generate_gate_pass_use_case.dart';
+import 'package:edugated/domain/use_cases/login_use_case.dart';
 import 'package:edugated/features/add_contact/add_contact_initial_params.dart';
 import 'package:edugated/features/generate_gate_pass/generate_gate_pass_navigator.dart';
 import 'package:edugated/features/guest_pass/guest_pass_initial_params.dart';
@@ -31,7 +32,7 @@ class GenerateGatePassCubit extends Cubit<GenerateGatePassState> {
 
   Future<void> fetchContacts() async {
     emit(state.copyWith(isLoading: true, error: null));
-    await contactsRepository.getContacts({"user_id": "2"}).then((value) async =>
+    await contactsRepository.getContacts({"user_id": user_idd??"0"}).then((value) async =>
         value.fold((error) => emit(state.copyWith(error: error.error)),
             (contacts) {
           emit(state.copyWith(contacts: contacts, isLoading: false));

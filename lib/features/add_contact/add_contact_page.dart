@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:edugated/domain/entities/add_contact.dart';
+import 'package:edugated/domain/use_cases/login_use_case.dart';
 import 'package:edugated/features/add_contact/add_contact_state.dart';
 import 'package:edugated/resources/app_colors.dart';
 import 'package:edugated/widget/content_field.dart';
@@ -185,7 +186,7 @@ class _AddContactState extends State<AddContactPage> {
                         title: 'Add',
                         onTap: () {
                           cubit.onTapAdd(AddContact(
-                              userId: "1",
+                              userId:user_idd??"0",
                               name: nameController.text,
                               phone: phoneController.text,
                               type: typeController.text,

@@ -1,3 +1,4 @@
+import 'package:edugated/domain/use_cases/login_use_case.dart';
 import 'package:edugated/resources/app_colors.dart';
 import 'package:edugated/widget/content.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _GatePassState extends State<GatePassPage> {
         appBar: AppBar(
           centerTitle: true,
           title: Content(
-            data: "Pass",
+            data: "My Pass",
             size: 22.h,
             weight: FontWeight.w600,
           ),
@@ -54,7 +55,7 @@ class _GatePassState extends State<GatePassPage> {
                         borderRadius: BorderRadius.circular(30)),
                     child: PrettyQrView(
                       qrImage: QrImage(
-                          QrCode.fromData(data: "data", errorCorrectLevel: 1)),
+                          QrCode.fromData(data: user_qr??"EduGated", errorCorrectLevel: 1)),
                       decoration: const PrettyQrDecoration(
                           shape: PrettyQrSmoothSymbol(
                               color: AppColors.primaryColorDark,
@@ -81,7 +82,7 @@ class _GatePassState extends State<GatePassPage> {
                             borderRadius: BorderRadius.circular(25)),
                         child: Center(
                             child: Text(
-                          "attendeesName",
+                          user_name ?? "EduGated",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 20,

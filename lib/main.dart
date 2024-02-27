@@ -1,4 +1,4 @@
-import 'package:edugated/data/guest_json/rest_api_guest_repository.dart';
+import 'package:edugated/data/rest_api_guest_repository.dart';
 import 'package:edugated/data/insecure_local_storage_repository.dart';
 import 'package:edugated/data/rest_api_activity_repository.dart';
 import 'package:edugated/data/rest_api_add_contact_repository.dart';
@@ -47,6 +47,9 @@ import 'package:edugated/features/home/home_navigator.dart';
 import 'package:edugated/features/login/login_cubit.dart';
 import 'package:edugated/features/login/login_initial_params.dart';
 import 'package:edugated/features/login/login_navigator.dart';
+import 'package:edugated/features/pass_detail/pass_detail_cubit.dart';
+import 'package:edugated/features/pass_detail/pass_detail_initial_params.dart';
+import 'package:edugated/features/pass_detail/pass_detail_navigator.dart';
 import 'package:edugated/features/profile/profile_cubit.dart';
 import 'package:edugated/features/profile/profile_initial_params.dart';
 import 'package:edugated/features/profile/profile_navigator.dart';
@@ -132,6 +135,7 @@ Future<void> main() async {
   getIt.registerSingleton<SelectionNavigator>(SelectionNavigator(getIt()));
   getIt.registerSingleton<LoginNavigator>(LoginNavigator(getIt()));
   getIt.registerSingleton<ScanNavigator>(ScanNavigator(getIt()));
+  getIt.registerSingleton<PassDetailNavigator>(PassDetailNavigator());
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Use Case >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -168,7 +172,7 @@ Future<void> main() async {
   getIt.registerFactoryParam<GuestPassCubit, GuestPassInitialParams, dynamic>(
       (param, _) => GuestPassCubit(param, getIt(), getIt()));
   getIt.registerFactoryParam<ProfileCubit, ProfileInitialParams, dynamic>(
-      (param, _) => ProfileCubit(param, getIt(),getIt()));
+      (param, _) => ProfileCubit(param, getIt(), getIt()));
   getIt.registerFactoryParam<SelectionCubit, SelectionInitialParams, dynamic>(
       (param, _) => SelectionCubit(param, getIt()));
 
@@ -176,6 +180,8 @@ Future<void> main() async {
       (param, _) => LoginCubit(param, getIt(), getIt()));
   getIt.registerFactoryParam<ScanCubit, ScanInitialParams, dynamic>(
       (param, _) => ScanCubit(param, getIt(), getIt()));
+  getIt.registerFactoryParam<PassDetailCubit, PassDetailInitialParams, dynamic>(
+      (param, _) => PassDetailCubit(param));
 
   runApp(const MyApp());
 }

@@ -1,3 +1,4 @@
+import 'package:edugated/domain/use_cases/login_use_case.dart';
 import 'package:edugated/features/activity/activity_initial_params.dart';
 import 'package:edugated/features/activity/activity_page.dart';
 import 'package:edugated/features/guest/guest_initial_params.dart';
@@ -53,10 +54,13 @@ class _HomeState extends State<HomePage> {
               return Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  state.user.userType == "guard"
+                  // state.user.userType 
+                  user_typee== "guard"
                       ? _guardPages[state.selectedPageIndex]
                       : _pages[state.selectedPageIndex],
-                  state.user.userType == "guard"
+                  // state.user.userType
+                  user_typee
+                   == "guard"
                       ? SafeArea(
                           child: Container(
                               margin: EdgeInsets.symmetric(
@@ -229,55 +233,49 @@ class _HomeState extends State<HomePage> {
                                       ),
                                     ),
                                   ),
-                                  state.user.userType == "guard"
-                                      ? GestureDetector(
-                                          onTap: () {
-                                            cubit.onPageUpdate(1);
-                                          },
-                                          child: AnimatedContainer(
-                                            duration: Duration(seconds: 1),
-                                            curve:
-                                                Curves.fastLinearToSlowEaseIn,
-                                            // margin: EdgeInsets.only(right: 10),
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 14, horizontal: 15),
-                                            decoration: BoxDecoration(
+                                  GestureDetector(
+                                    onTap: () {
+                                      cubit.onPageUpdate(1);
+                                    },
+                                    child: AnimatedContainer(
+                                      duration: Duration(seconds: 1),
+                                      curve: Curves.fastLinearToSlowEaseIn,
+                                      // margin: EdgeInsets.only(right: 10),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 14, horizontal: 15),
+                                      decoration: BoxDecoration(
+                                          color:
+                                              homeState.selectedPageIndex == 1
+                                                  ? AppColors.primaryColorDark
+                                                  : Colors.transparent,
+                                          borderRadius:
+                                              BorderRadius.circular(30)),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            AppAssets.employees,
+                                            color:
+                                                homeState.selectedPageIndex == 1
+                                                    ? Colors.white
+                                                    : AppColors
+                                                        .primaryColorDark,
+                                            height: 24,
+                                          ),
+                                          Text(
+                                            "  Guest",
+                                            style: TextStyle(
                                                 color: homeState
                                                             .selectedPageIndex ==
                                                         1
-                                                    ? AppColors.primaryColorDark
-                                                    : Colors.transparent,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: Row(
-                                              children: [
-                                                Image.asset(
-                                                  AppAssets.employees,
-                                                  color: homeState
-                                                              .selectedPageIndex ==
-                                                          1
-                                                      ? Colors.white
-                                                      : AppColors
-                                                          .primaryColorDark,
-                                                  height: 24,
-                                                ),
-                                                Text(
-                                                  "  Guest",
-                                                  style: TextStyle(
-                                                      color: homeState
-                                                                  .selectedPageIndex ==
-                                                              1
-                                                          ? Colors.white
-                                                          : AppColors
-                                                              .primaryColorDark,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      : SizedBox(),
+                                                    ? Colors.white
+                                                    : AppColors
+                                                        .primaryColorDark,
+                                                fontWeight: FontWeight.w600),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                   GestureDetector(
                                     onTap: () {
                                       cubit.onPageUpdate(2);

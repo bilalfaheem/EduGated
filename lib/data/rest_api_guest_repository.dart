@@ -14,7 +14,7 @@ class RestApiGuestRepository implements GuestRepository {
   @override
   Future<Either<GuestFailure, (List<Pass>, List<Pass>)>> getGuestPass(
           Map<String, String> data) =>
-      _network.post(_appUrl.baseUrl + _appUrl.guestPassEndPoint, data).then(
+      _network.postFile(_appUrl.baseUrl + _appUrl.guestPassEndPoint, data,{}).then(
           (value) => value.fold((err) => left(GuestFailure(error: err.error)),
                   (response) {
                 final active = response["data"]["active"] as List;

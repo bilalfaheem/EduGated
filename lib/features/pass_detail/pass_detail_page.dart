@@ -33,6 +33,7 @@ class _PassDetailState extends State<PassDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Content(
             data: "Pass Detail",
             size: 24.h,

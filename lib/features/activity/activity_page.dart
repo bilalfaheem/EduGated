@@ -1,3 +1,4 @@
+import 'package:edugated/domain/use_cases/login_use_case.dart';
 import 'package:edugated/features/activity/activity_state.dart';
 import 'package:edugated/features/activity/widget/activity_tile.dart';
 import 'package:edugated/resources/app_assets.dart';
@@ -41,46 +42,75 @@ class _ActivityState extends State<ActivityPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocBuilder(
-                bloc: cubit,
-                builder: (context, state) {
-                  final activityState = state as ActivityState;
-
-                  return activityState.user.userType == "guard"
-                      ? GestureDetector(
-                          onTap: () => cubit.onTapScan(),
-                          child: Container(
-                              margin: const EdgeInsets.only(top: 20, bottom: 7),
-                              padding: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                  color: AppColors.primaryColorLight,
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: Image.asset(
-                                
-                                AppAssets.scanner,
-                                height: 80.h,
-                                width: 80.h,
-                                color: AppColors.primaryColorDark,
-                              )),
-                        )
-                      : GestureDetector(
-                          onTap: () => cubit.onTapPass(),
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 20, bottom: 7),
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                                color: AppColors.primaryColorLight,
-                                borderRadius: BorderRadius.circular(30)),
-                            child:  PrettyQr(
-                              elementColor: AppColors.primaryColorDark,
-                              size: 80.h,
-                              data: "attendeesQr",
-                              errorCorrectLevel: QrErrorCorrectLevel.M,
-                              roundEdges: true,
-                            ),
-                          ),
-                        );
-                }),
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                   Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: GestureDetector(
+                            child: Icon(
+                              Icons.replay_outlined,
+                              color:Colors.transparent,
+                            )),
+                      ),
+                  BlocBuilder(
+                      bloc: cubit,
+                      builder: (context, state) {
+                        final activityState = state as ActivityState;
+                  
+                        return
+                         user_typee
+                                //  activityState.user.userType
+                                ==
+                                "guard"
+                            ? GestureDetector(
+                                onTap: () => cubit.onTapScan(),
+                                child: Container(
+                                    margin: const EdgeInsets.only(top: 20, bottom: 7),
+                                    padding: const EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                        color: AppColors.primaryColorLight,
+                                        borderRadius: BorderRadius.circular(30)),
+                                    child: Image.asset(
+                                      AppAssets.scanner,
+                                      height: 80.h,
+                                      width: 80.h,
+                                      color: AppColors.primaryColorDark,
+                                    )),
+                              )
+                            : GestureDetector(
+                                onTap: () => cubit.onTapPass(),
+                                child: Container(
+                                  margin: const EdgeInsets.only(top: 20, bottom: 7),
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.primaryColorLight,
+                                      borderRadius: BorderRadius.circular(30)),
+                                  child: PrettyQr(
+                                    elementColor: AppColors.primaryColorDark,
+                                    size: 80.h,
+                                    data: "attendeesQr",
+                                    errorCorrectLevel: QrErrorCorrectLevel.M,
+                                    roundEdges: true,
+                                  ),
+                                ),
+                              );
+                      }),
+                       Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: GestureDetector(
+                            onTap: () => cubit.fetchActivity(),
+                            child: Icon(
+                              Icons.replay_outlined,
+                              color: AppColors.primaryColorDark,
+                            )),
+                      )
+                ],
+              ),
+            ),
           ],
         ),
         Row(

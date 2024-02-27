@@ -27,6 +27,15 @@ class LoginUseCase {
                   .then((value) => value
                           .fold((l) => left(LoginFailure(error: l.error)), (r) {
                         _userStore.setUser(response);
+                        user_idd = response.id;
+                        user_typee = response.userType;
+                        user_name = response.name;
+                        user_qr = response.qrCode;
                         return right(response);
                       })))));
 }
+
+String? user_idd;
+String? user_name;
+String? user_qr;
+String? user_typee;

@@ -12,7 +12,7 @@ class RestApiScanRepository implements ScanRepository {
   RestApiScanRepository(this._appUrl, this._network);
   @override
   Future<Either<ScanFailure, PassDetail>> scan(Map<String, String> data) =>
-      _network.post(_appUrl.baseUrl + _appUrl.contactsEndPoint, data).then(
+      _network.postFile(_appUrl.baseUrl + _appUrl.scanEndPoint, data,{}).then(
           (value) =>
               value.fold((l) => left(ScanFailure(error: l.error)), (response) {
                 if (response["status"] == false) {

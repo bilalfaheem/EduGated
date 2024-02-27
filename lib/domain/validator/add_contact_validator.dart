@@ -1,4 +1,5 @@
 import 'package:edugated/domain/entities/add_contact.dart';
+import 'package:edugated/domain/entities/user.dart';
 import 'package:edugated/domain/failures/add_contact_failure.dart';
 import 'package:edugated/resources/validator.dart';
 import 'package:fpdart/fpdart.dart';
@@ -24,7 +25,7 @@ class AddContactValidator {
     } else {
       return right((
         {
-          "user_id": "",
+          "user_id": addContact.userId,
           "name": addContact.name,
           "phone": addContact.phone,
           "type": addContact.type,
