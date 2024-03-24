@@ -11,8 +11,8 @@ class HomeState {
     required this.user,
   });
 
-  factory HomeState.initial({required HomeInitialParams initialParams}) =>
-      const HomeState(selectedPageIndex: 0, user: User.empty());
+  factory HomeState.initial({required HomeInitialParams initialParams,required User user}) =>
+       HomeState(selectedPageIndex: 0, user: user);
 
   HomeState copyWith({int? selectedPageIndex, User? user}) => HomeState(
         selectedPageIndex: selectedPageIndex ?? this.selectedPageIndex,

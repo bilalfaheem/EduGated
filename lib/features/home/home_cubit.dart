@@ -10,10 +10,10 @@ class HomeCubit extends Cubit<HomeState> {
   final UserStore _userStore;
 
   HomeCubit(this.initialParams, this.navigator, this._userStore)
-      : super(HomeState.initial(initialParams: initialParams));
-  onInit() {
-    emit(state.copyWith(user: _userStore.state));
-  }
+      : super(HomeState.initial(initialParams: initialParams,user: _userStore.state));
+  // onInit() {
+  //   emit(state.copyWith(user: _userStore.state));
+  // }
 
   onPageUpdate(int pageIndex) =>
       emit(state.copyWith(selectedPageIndex: pageIndex));

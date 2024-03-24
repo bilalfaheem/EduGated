@@ -14,8 +14,8 @@ class ActivityState {
     required this.user,
   });
 
-  factory ActivityState.initial() =>
-      const ActivityState(activities: [], isLoading: false, user: User.empty());
+  factory ActivityState.initial({required User user}) =>
+      ActivityState(activities: [], isLoading: false, user: user);
 
   ActivityState copyWith(
           {List<Activity>? activities,

@@ -40,7 +40,7 @@ class _HomeState extends State<HomePage> {
 
   @override
   void initState() {
-    cubit.onInit();
+    // cubit.onInit();
     super.initState();
   }
 
@@ -54,12 +54,13 @@ class _HomeState extends State<HomePage> {
               return Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  // state.user.userType 
-                  user_typee== "guard"
+                  state.user.userType 
+                  // user_typee
+                  == "guard"
                       ? _guardPages[state.selectedPageIndex]
                       : _pages[state.selectedPageIndex],
-                  // state.user.userType
-                  user_typee
+                  state.user.userType
+                  // user_typee
                    == "guard"
                       ? SafeArea(
                           child: Container(
