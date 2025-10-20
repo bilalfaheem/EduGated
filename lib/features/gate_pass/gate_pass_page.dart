@@ -1,7 +1,9 @@
 import 'package:edugated/domain/use_cases/login_use_case.dart';
+import 'package:edugated/features/gate_pass/gate_pass_state.dart';
 import 'package:edugated/resources/app_colors.dart';
 import 'package:edugated/widget/content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
@@ -41,57 +43,64 @@ class _GatePassState extends State<GatePassPage> {
         body: SafeArea(
             child: Center(
                 child: Center(
-          child: Container(
-            width: 240,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    // margin: EdgeInsets.only(top: 20),
-                    padding: const EdgeInsets.all(30),
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryColorLight,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: PrettyQrView(
-                      qrImage: QrImage(
-                          QrCode.fromData(data: user_qr??"EduGated", errorCorrectLevel: 1)),
-                      decoration: const PrettyQrDecoration(
-                          shape: PrettyQrSmoothSymbol(
-                              color: AppColors.primaryColorDark,
-                              roundFactor: 1)),
-                    )
-                    //  PrettyQr(
-                    //   elementColor: AppColors.primaryColorDark,
-                    //   // image: AssetImage(logo),
-                    //   size: 200,
-                    //   data: "attendeesQr",
-                    //   roundEdges: true,
-                    // ),
-                    ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        width: 240,
-                        margin: EdgeInsets.only(top: 20, bottom: 40),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                        decoration: BoxDecoration(
-                            color: AppColors.primaryColorDark,
-                            borderRadius: BorderRadius.circular(25)),
-                        child: Center(
-                            child: Text(
-                          user_name ?? "EduGated",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              color: Colors.white),
-                        ))),
-                  ],
-                ),
-              ],
-            ),
+          child: BlocBuilder(
+            bloc: cubit,
+            builder: (context, state) {
+                        final states = state as GatePassState;
+
+              return Container(
+                      width: 240,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              // margin: EdgeInsets.only(top: 20),
+                              padding: const EdgeInsets.all(30),
+                              decoration: BoxDecoration(
+                                  color: AppColors.primaryColorLight,
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: PrettyQrView(
+                                qrImage: QrImage(
+                                    QrCode.fromData(data:states.user.qrCode??"EduGated", errorCorrectLevel: 1)),
+                                decoration: const PrettyQrDecoration(
+                                    shape: PrettyQrSmoothSymbol(
+                                        color: AppColors.primaryColorDark,
+                                        roundFactor: 1)),
+                              )
+                              //  PrettyQr(
+                              //   elementColor: AppColors.primaryColorDark,
+                              //   // image: AssetImage(logo),
+                              //   size: 200,
+                              //   data: "attendeesQr",
+                              //   roundEdges: true,
+                              // ),
+                              ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                  width: 240,
+                                  margin: EdgeInsets.only(top: 20, bottom: 40),
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.primaryColorDark,
+                                      borderRadius: BorderRadius.circular(25)),
+                                  child: Center(
+                                      child: Text(
+                                   states.user.name ?? "",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 20,
+                                        color: Colors.white),
+                                  ))),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+            },
           ),
         ))));
   }

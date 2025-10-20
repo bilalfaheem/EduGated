@@ -104,10 +104,13 @@ class _LoginState extends State<LoginPage> {
                             child: PrimaryButton(
                                 loading: loginState.isLoading,
                                 title: "Login",
-                                onTap: () => cubit.onTapLogin(Login(
+                                onTap: () =>
+                                
+                                 cubit.onTapLogin(Login(
                                     cubit.emailController.text,
                                     cubit.passwordController.text,
-                                    loginState.initialParams.userType)))),
+                                    loginState.initialParams.userType))
+                                    )),
                       ),
                     ],
                   ),

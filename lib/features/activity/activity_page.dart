@@ -62,7 +62,7 @@ class _ActivityState extends State<ActivityPage> {
                         final activityState = state as ActivityState;
                   
                         return
-                         user_typee
+                         activityState.user.userType
                                 //  activityState.user.userType
                                 ==
                                 "guard"

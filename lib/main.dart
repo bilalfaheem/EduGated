@@ -164,16 +164,17 @@ Future<void> main() async {
   getIt.registerFactoryParam<HomeCubit, HomeInitialParams, dynamic>(
       (params, _) => HomeCubit(params, getIt(), getIt()));
   getIt.registerFactoryParam<GuestCubit, GuestInitialParams, dynamic>(
-      (params, _) => GuestCubit(params, getIt(), getIt())..fetchGuestPass());
-  getIt.registerFactoryParam<GatePassCubit, GatePassInitialParams, dynamic>(
-      (params, _) => GatePassCubit(params, getIt()));
-  getIt.registerFactoryParam<GenerateGatePassCubit,
-          GenerateGatePassInitialParams, dynamic>(
       (params, _) =>
-          GenerateGatePassCubit(params, getIt(), getIt(), getIt(), getIt())
-            ..fetchContacts());
+          GuestCubit(params, getIt(), getIt(), getIt())..fetchGuestPass());
+  getIt.registerFactoryParam<GatePassCubit, GatePassInitialParams, dynamic>(
+      (params, _) => GatePassCubit(params, getIt(), getIt()));
+  getIt.registerFactoryParam<GenerateGatePassCubit,
+      GenerateGatePassInitialParams, dynamic>((params,
+          _) =>
+      GenerateGatePassCubit(params, getIt(), getIt(), getIt(), getIt(), getIt())
+        ..fetchContacts());
   getIt.registerFactoryParam<AddContactCubit, AddContactInitialParams, dynamic>(
-      (param, _) => AddContactCubit(param, getIt(), getIt()));
+      (param, _) => AddContactCubit(param, getIt(), getIt(), getIt()));
   getIt.registerFactoryParam<GuestPassCubit, GuestPassInitialParams, dynamic>(
       (param, _) => GuestPassCubit(param, getIt(), getIt()));
   getIt.registerFactoryParam<ProfileCubit, ProfileInitialParams, dynamic>(

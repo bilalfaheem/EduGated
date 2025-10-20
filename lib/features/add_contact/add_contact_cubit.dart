@@ -1,4 +1,5 @@
 import 'package:edugated/domain/entities/add_contact.dart';
+import 'package:edugated/domain/stores/user_store.dart';
 import 'package:edugated/domain/use_cases/add_contact_use_case.dart';
 import 'package:edugated/features/generate_gate_pass/generate_gate_pass_cubit.dart';
 import 'package:edugated/resources/utils.dart';
@@ -12,13 +13,13 @@ class AddContactCubit extends Cubit<AddContactState> {
   final AddContactInitialParams initialParams;
   final PickImageService pickImageService;
   final AddContactUseCase _addContactUseCase;
+  final UserStore _userStore;
+
   // final GenerateGatePassCubit _generateGatePassCubit;
 
   AddContactCubit(this.initialParams, this.pickImageService,
-      this._addContactUseCase
-      // , this._generateGatePassCubit
-      )
-      : super(AddContactState.initial());
+      this._addContactUseCase, this._userStore)
+      : super(AddContactState.initial(user: _userStore.state));
 
   late BuildContext context;
 

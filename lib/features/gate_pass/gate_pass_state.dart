@@ -1,11 +1,15 @@
+import 'package:edugated/domain/entities/user.dart';
+
 import 'gate_pass_initial_params.dart';
 
 class GatePassState {
-  const GatePassState();
+  final User user;
+
+  const GatePassState(this.user);
 
   factory GatePassState.initial(
-          {required GatePassInitialParams initialParams}) =>
-      GatePassState();
+          {required GatePassInitialParams initialParams, required User user}) =>
+      GatePassState(user);
 
-  GatePassState copyWith() => const GatePassState();
+  GatePassState copyWith() =>  GatePassState(user);
 }

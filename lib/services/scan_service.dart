@@ -10,7 +10,7 @@ class ScanService {
 
     if (barcodes.isNotEmpty) {
       return right({
-        "guard_id": user_idd ?? "3",
+        "guard_id": "user_idd" ?? "3",
         "qr_code": barcodes.first.displayValue.toString()
       });
     } else {

@@ -199,7 +199,7 @@ class _GenerateGatePassState extends State<GenerateGatePassPage> {
                                   title: 'Generate',
                                   onTap: () async => cubit.onTapGenerate(
                                       GenerateGatePass(
-                                          user_idd ?? "0",
+                                          state.user.id ?? "0",
                                           generateGatePassState.contactId ?? "",
                                           cubit.dateController.text))),
                             ],

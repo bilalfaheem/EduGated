@@ -186,7 +186,7 @@ class _AddContactState extends State<AddContactPage> {
                         title: 'Add',
                         onTap: () {
                           cubit.onTapAdd(AddContact(
-                              userId:user_idd??"0",
+                              userId:state.user.id ,
                               name: nameController.text,
                               phone: phoneController.text,
                               type: typeController.text,

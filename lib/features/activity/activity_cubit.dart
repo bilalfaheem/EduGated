@@ -16,7 +16,7 @@ class ActivityCubit extends Cubit<ActivityState> {
 
   ActivityCubit(this.initialParams, this.activityRespository, this.navigator,
       this._userStore)
-      : super(ActivityState.initial());
+      : super(ActivityState.initial(user:  _userStore.state));
 
   onInit() {
     emit(state.copyWith(user: _userStore.state));
@@ -27,7 +27,7 @@ class ActivityCubit extends Cubit<ActivityState> {
 
   Future<void> fetchActivity() async {
     emit(state.copyWith(isLoading: true, error: null));
-    await activityRespository.getActivities({'user_id': user_idd}).then((value) =>
+    await activityRespository.getActivities({'user_id':state.user.id}).then((value) =>
         value.fold(
             (error) => emit(state.copyWith(error: error.error)),
             (activities) => emit(

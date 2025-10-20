@@ -2,6 +2,7 @@ import 'package:edugated/domain/entities/contact.dart';
 import 'package:edugated/domain/entities/generate_gate_pass.dart';
 import 'package:edugated/domain/entities/pass.dart';
 import 'package:edugated/domain/repositories/contacts.repository.dart';
+import 'package:edugated/domain/stores/user_store.dart';
 import 'package:edugated/domain/use_cases/generate_gate_pass_use_case.dart';
 import 'package:edugated/domain/use_cases/login_use_case.dart';
 import 'package:edugated/features/add_contact/add_contact_initial_params.dart';
@@ -21,10 +22,15 @@ class GenerateGatePassCubit extends Cubit<GenerateGatePassState> {
   final GenerateGatePassUseCase generateGatePassUseCase;
   final GenerateGatePassNavigator navigator;
   final DatePickerService datePickerService;
-
-  GenerateGatePassCubit(this.initialParams, this.contactsRepository,
-      this.generateGatePassUseCase, this.navigator, this.datePickerService)
-      : super(GenerateGatePassState.initial());
+  final UserStore _userStore;
+  GenerateGatePassCubit(
+      this.initialParams,
+      this.contactsRepository,
+      this.generateGatePassUseCase,
+      this.navigator,
+      this.datePickerService,
+      this._userStore)
+      : super(GenerateGatePassState.initial(_userStore.state));
 
   late BuildContext context;
   late TextEditingController dateController;
@@ -34,11 +40,12 @@ class GenerateGatePassCubit extends Cubit<GenerateGatePassState> {
 
   Future<void> fetchContacts() async {
     emit(state.copyWith(isLoading: true, error: null));
-    await contactsRepository.getContacts({"user_id": user_idd??"0"}).then((value) async =>
-        value.fold((error) => emit(state.copyWith(error: error.error)),
-            (contacts) {
-          emit(state.copyWith(contacts: contacts, isLoading: false));
-        }));
+    await contactsRepository
+        .getContacts({"user_id": state.user.id ?? "0"}).then((value) async =>
+            value.fold((error) => emit(state.copyWith(error: error.error)),
+                (contacts) {
+              emit(state.copyWith(contacts: contacts, isLoading: false));
+            }));
   }
 
   onTapGenerate(GenerateGatePass generateGatePass) {
@@ -70,5 +77,5 @@ class GenerateGatePassCubit extends Cubit<GenerateGatePassState> {
       navigator.openGuestPassPushReplacement(GuestPassInitialParams(pass));
 
   onLongPressContact(ContactInitialParams initialParams) =>
-  navigator.openContact(initialParams);
+      navigator.openContact(initialParams);
 }

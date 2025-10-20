@@ -1,4 +1,5 @@
 import 'package:edugated/domain/repositories/guest_repository.dart';
+import 'package:edugated/domain/stores/user_store.dart';
 import 'package:edugated/domain/use_cases/login_use_case.dart';
 import 'package:edugated/features/generate_gate_pass/generate_gate_pass_initial_params.dart';
 import 'package:edugated/features/guest/domain.models/guest_pass_type.dart';
@@ -12,9 +13,10 @@ class GuestCubit extends Cubit<GuestState> {
   final GuestInitialParams initialParams;
   final GuestRepository _repo;
   final GuestNavigator navigator;
+  final UserStore _userStore;
 
-  GuestCubit(this.initialParams, this._repo, this.navigator)
-      : super(GuestState.initial());
+  GuestCubit(this.initialParams, this._repo, this.navigator,this._userStore)
+      : super(GuestState.initial( _userStore.state));
 
   onTabUpdated(GuestPassType type) => emit(state.copyWith(selectedTab: type));
 
@@ -25,7 +27,7 @@ class GuestCubit extends Cubit<GuestState> {
 
   Future<void> fetchGuestPass() async {
     emit(state.copyWith(isLoading: true, error: null));
-    await _repo.getGuestPass({'user_id': user_idd ?? "0"}).then((value) =>
+    await _repo.getGuestPass({'user_id': state.user.id ?? "0"}).then((value) =>
         value.fold(
             (error) => emit(state.copyWith(error: error.error)),
             (value) => emit(state.copyWith(
